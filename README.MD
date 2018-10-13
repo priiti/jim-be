@@ -1,1 +1,1 @@
-# JIM application back end repository
+# JIM application back end
