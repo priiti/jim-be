@@ -1,6 +1,6 @@
 package ee.sport.jim.webapp.rest.controller.competitor;
 
-import ee.sport.jim.webapp.rest.dto.competitor.CompParticipantRegistrationDto;
+import ee.sport.jim.webapp.rest.dto.competitor.ParticipantRegistrationDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ public class CompetitorController {
 	}
 
 	@PostMapping(value = "/register", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity register(@RequestBody @NotNull @Valid CompParticipantRegistrationDto participantRegistrationDto) {
+	public ResponseEntity register(@RequestBody @NotNull @Valid ParticipantRegistrationDto participantRegistrationDto) {
 		competitorRestService.register(participantRegistrationDto);
 		return ResponseEntity.ok().build();
 	}

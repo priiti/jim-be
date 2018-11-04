@@ -5,19 +5,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class CompParticipantRegistrationDto {
+public class ParticipantRegistrationDto {
 	@NotNull
-	@Max(value = 100)
 	private String firstName;
 	@NotNull
-	@Max(value = 100)
 	private String lastName;
 	@NotNull
 	@Email

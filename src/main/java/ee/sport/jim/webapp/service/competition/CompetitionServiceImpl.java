@@ -7,6 +7,7 @@ import ee.sport.jim.webapp.repository.CompetitionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -29,5 +30,30 @@ public class CompetitionServiceImpl implements CompetitionService {
 	@Override
 	public Optional<CompetitionDistance> getCompetitionDistance(long competitionDistanceId) {
 		return competitionDistanceRepository.findById(competitionDistanceId);
+	}
+
+	@Override
+	public List<Competition> findAll() {
+		return competitionRepository.findAll();
+	}
+
+	@Override
+	public Optional<Competition> findById(Long competitionId) {
+		return competitionRepository.findById(competitionId);
+	}
+
+	@Override
+	public Competition save(Competition competition) {
+		return competitionRepository.save(competition);
+	}
+
+	@Override
+	public void delete(Competition competition) {
+		competitionRepository.delete(competition);
+	}
+
+	@Override
+	public void deleteBy(Long competitionId) {
+		competitionRepository.deleteById(competitionId);
 	}
 }

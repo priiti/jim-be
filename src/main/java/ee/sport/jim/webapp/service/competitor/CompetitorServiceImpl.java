@@ -6,6 +6,7 @@ import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.domain.shared.RegistrationHolder;
 import ee.sport.jim.webapp.repository.CompetitorRepository;
 import ee.sport.jim.webapp.repository.ParticipantRepository;
+import ee.sport.jim.webapp.rest.exception.ResourceNotFoundException;
 import ee.sport.jim.webapp.service.competition.CompetitionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,7 @@ public class CompetitorServiceImpl implements CompetitorService {
 	private final CompetitorRepository competitorRepository;
 	private final CompetitionService competitionService;
 
-	public CompetitorServiceImpl(ParticipantRepository participantRepository,
-															 CompetitorRepository competitorRepository,
+	public CompetitorServiceImpl(ParticipantRepository participantRepository, CompetitorRepository competitorRepository,
 															 CompetitionService competitionService) {
 		this.participantRepository = participantRepository;
 		this.competitorRepository = competitorRepository;
@@ -35,7 +35,7 @@ public class CompetitorServiceImpl implements CompetitorService {
 		Optional<CompetitionDistance> optionalDistance = competitionService.getCompetitionDistance(distanceId);
 		if (!optionalDistance.isPresent()) {
 			log.error("Registration failed for user: " + registrantInfo);
-			throw new RuntimeException();
+			throw new ResourceNotFoundException(String.format("Distance with ID {%d} not found.", distanceId));
 		}
 		Competitor competitor = competitorRepository.save(registrationHolder.getCompetitor());
 		Participant participant = registrationHolder.getParticipant();
