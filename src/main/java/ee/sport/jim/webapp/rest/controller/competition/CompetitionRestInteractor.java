@@ -23,7 +23,8 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 
 	@Override
 	public CompetitionDto getCompetitionForRegistration(long competitionId) {
-		Optional<Competition> competitionOptional = competitionService.getCompetitionForRegistration(competitionId);
+		log.info("Getting competition by id: " + competitionId);
+		Optional<Competition> competitionOptional = competitionService.findById(competitionId);
 		if (!competitionOptional.isPresent()) {
 			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + competitionId);
 		}

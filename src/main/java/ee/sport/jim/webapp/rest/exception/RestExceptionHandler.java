@@ -15,8 +15,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestControllerAdvice
@@ -28,12 +29,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers,
 																																final HttpStatus status, final WebRequest request) {
 		log.info(ex.getClass().getName());
-		final List<String> errors = new ArrayList<>();
+		final Map<String, String> errors = new HashMap<>();
 		for (final FieldError error : ex.getBindingResult().getFieldErrors()) {
-			errors.add(error.getField() + ": " + error.getDefaultMessage());
+			errors.put(error.getField(), error.getField() + ": " + error.getDefaultMessage());
 		}
 		for (final ObjectError error : ex.getBindingResult().getGlobalErrors()) {
-			errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
+			errors.put(error.getObjectName(), error.getObjectName() + ": " + error.getDefaultMessage());
 		}
 		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
@@ -42,9 +43,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({ ConstraintViolationException.class })
 	public ResponseEntity<Object> handleConstraintViolation(final ConstraintViolationException ex, final WebRequest request) {
 		log.info(ex.getClass().getName());
-		final List<String> errors = new ArrayList<>();
+		final Map<String, String> errors = new HashMap<>();
 		for (final ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-			errors.add(violation.getRootBeanClass().getName() + " " + violation.getPropertyPath() + ": " + violation.getMessage());
+			errors.put(violation.getRootBeanClass().getName(),
+				violation.getRootBeanClass().getName() + " " + violation.getPropertyPath() + ": " + violation.getMessage());
 		}
 		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
 		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
@@ -53,8 +55,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({ MethodArgumentTypeMismatchException.class })
 	public ResponseEntity<Object> handleMethodArgumentTypeMismatch(final MethodArgumentTypeMismatchException ex, final WebRequest request) {
 		log.info(ex.getClass().getName());
-		final String error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
-		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+		final Map<String, String> errors = Collections.singletonMap(ex.getName(), ex.getName() + " should be of type " + ex.getRequiredType().getName());
+		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
 		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 }

@@ -19,9 +19,8 @@ public class CompetitionController {
 		this.competitionRestService = competitionRestService;
 	}
 
-	@GetMapping(value = "/{competitionId}/register", produces = APPLICATION_JSON_VALUE)
-	public CompetitionDto registerCompetition(@PathVariable @NotNull final Long competitionId) {
+	@GetMapping(value = "/{competitionId}/registration", produces = APPLICATION_JSON_VALUE)
+	public CompetitionDto competitionRegistration(@PathVariable @NotNull final Long competitionId) {
 		return competitionRestService.getCompetitionForRegistration(competitionId);
 	}
-
 }

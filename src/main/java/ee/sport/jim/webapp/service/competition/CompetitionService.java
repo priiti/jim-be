@@ -8,8 +8,6 @@ import java.util.Optional;
 
 public interface CompetitionService extends CrudService<Competition, Long> {
 
-	Optional<Competition> getCompetitionForRegistration(long competitionId);
-
 	Optional<CompetitionDistance> getCompetitionDistance(long competitionDistanceId);
 
 }
