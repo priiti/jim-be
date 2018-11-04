@@ -11,33 +11,25 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CompParticipantRegistrationDto {
+public class ParticipantRegistrationDto {
 	@NotNull
 	private String firstName;
-
 	@NotNull
 	private String lastName;
-
 	@NotNull
 	@Email
 	private String email;
-
 	@NotNull
 	private String gender;
-
 	private String phoneNumber;
-
 	@NotNull
 	private LocalDateTime dateOfBirth;
 	private String sportsClub;
 	private Integer participationCount;
-
 	@NotNull
 	private boolean newsletterSubscription;
-
 	@NotNull
 	private boolean publishData;
-
 	@NotNull
 	private Long competitionDistanceId;
 }

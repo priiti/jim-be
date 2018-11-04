@@ -1,9 +1,9 @@
 package ee.sport.jim.webapp.rest.controller.competitor;
 
-import ee.sport.jim.webapp.rest.dto.competitor.CompParticipantRegistrationDto;
+import ee.sport.jim.webapp.rest.dto.competitor.ParticipantRegistrationDto;
 
 public interface CompetitorRestService {
 
-	void register(CompParticipantRegistrationDto compParticipantRegistrationDto);
+	void register(ParticipantRegistrationDto participantRegistrationDto);
 
 }
