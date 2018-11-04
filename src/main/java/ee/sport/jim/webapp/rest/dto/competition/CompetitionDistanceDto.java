@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,8 +15,11 @@ public class CompetitionDistanceDto {
 	private Long id;
 	private String name;
 	private BigDecimal length;
+	private Long championshipTypeId;
 	private String specialNotes;
-	private Date startTime;
+	private Long competitionId;
+	private LocalDateTime startTime;
+	private Integer startNumbering;
 	private ChampionshipTypeDto championshipType;
-	private List<CompetitionPriceDto> competitionPrices;
+	private List<CompetitionPriceDto> prices;
 }

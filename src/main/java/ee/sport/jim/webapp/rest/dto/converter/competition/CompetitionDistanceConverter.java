@@ -1,12 +1,13 @@
 package ee.sport.jim.webapp.rest.dto.converter.competition;
 
-import ee.sport.jim.webapp.domain.CompetitionDistance;
+import ee.sport.jim.webapp.domain.competition.ChampionshipType;
+import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDistanceDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
 import org.apache.commons.lang3.NotImplementedException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CompetitionDistanceConverter extends GenericConverter<CompetitionDistance, CompetitionDistanceDto> {
 	private final CompetitionPriceConverter competitionPriceConverter = new CompetitionPriceConverter();
@@ -14,17 +15,17 @@ public class CompetitionDistanceConverter extends GenericConverter<CompetitionDi
 
 	@Override
 	public CompetitionDistanceDto convertEntity(CompetitionDistance entity) {
-		CompetitionDistanceDto distance = new CompetitionDistanceDto();
-		distance.setId(entity.getId());
-		distance.setName(entity.getName());
-		distance.setLength(entity.getLength());
-		distance.setSpecialNotes(entity.getSpecialNotes());
-		distance.setStartTime(entity.getStartTime());
-		if (entity.getChampionshipType() != null) {
-			distance.setChampionshipType(championshipTypeConverter.convertEntity(entity.getChampionshipType()));
-		}
-		distance.setCompetitionPrices(competitionPriceConverter.convertEntity(new ArrayList<>(entity.getPrices())));
-		return distance;
+		CompetitionDistanceDto dto = new CompetitionDistanceDto();
+		dto.setId(entity.getId());
+		dto.setName(entity.getName());
+		dto.setLength(entity.getLength());
+		dto.setSpecialNotes(entity.getSpecialNotes());
+		dto.setStartTime(entity.getStartTime());
+		dto.setStartNumbering(entity.getStartNumbering());
+		Optional<ChampionshipType> optionalType = Optional.ofNullable(entity.getChampionshipType());
+		optionalType.ifPresent(type -> dto.setChampionshipType(championshipTypeConverter.convertEntity(type)));
+		dto.setPrices(competitionPriceConverter.convertEntity(entity.getPrices()));
+		return dto;
 	}
 
 	@Override
