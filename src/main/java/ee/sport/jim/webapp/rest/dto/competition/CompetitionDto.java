@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,9 +13,9 @@ import java.util.List;
 public class CompetitionDto {
 	private Long id;
 	private String name;
-	private Date startDate;
-	private Date endDate;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
 	private String description;
 	private String address;
-	private List<CompetitionDistanceDto> competitionDistances = new ArrayList<>();
+	private List<CompetitionDistanceDto> distances;
 }

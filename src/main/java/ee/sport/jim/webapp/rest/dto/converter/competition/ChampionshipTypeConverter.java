@@ -1,6 +1,6 @@
 package ee.sport.jim.webapp.rest.dto.converter.competition;
 
-import ee.sport.jim.webapp.domain.ChampionshipType;
+import ee.sport.jim.webapp.domain.competition.ChampionshipType;
 import ee.sport.jim.webapp.rest.dto.competition.ChampionshipTypeDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
 import org.apache.commons.lang3.NotImplementedException;

@@ -1,11 +1,11 @@
 package ee.sport.jim.webapp.rest.dto.converter.competition;
 
-import ee.sport.jim.webapp.domain.CompetitionPrice;
+import ee.sport.jim.webapp.domain.competition.CompetitionPrice;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionPriceDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
 import org.apache.commons.lang3.NotImplementedException;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +29,7 @@ public class CompetitionPriceConverter extends GenericConverter<CompetitionPrice
 	public List<CompetitionPriceDto> convertEntity(List<CompetitionPrice> entities) {
 		return entities.stream()
 			.map(this::convertEntity)
-			.filter(competitionPriceDto -> competitionPriceDto.getEndDate().after(new Date()))
+			.filter(competitionPriceDto -> competitionPriceDto.getEndDate().isAfter(LocalDateTime.now()))
 			.collect(Collectors.toList());
 	}
 }

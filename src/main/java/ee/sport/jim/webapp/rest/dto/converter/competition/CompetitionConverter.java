@@ -1,11 +1,10 @@
 package ee.sport.jim.webapp.rest.dto.converter.competition;
 
-import ee.sport.jim.webapp.domain.Competition;
+import ee.sport.jim.webapp.domain.competition.Competition;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
 import org.apache.commons.lang3.NotImplementedException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CompetitionConverter extends GenericConverter<Competition, CompetitionDto> {
@@ -15,10 +14,12 @@ public class CompetitionConverter extends GenericConverter<Competition, Competit
 	public CompetitionDto convertEntity(Competition entity) {
 		CompetitionDto dto = new CompetitionDto();
 		dto.setId(entity.getId());
+		dto.setName(entity.getName());
 		dto.setStartDate(entity.getStartDate());
+		dto.setEndDate(entity.getEndDate());
 		dto.setDescription(entity.getDescription());
 		dto.setAddress(entity.getAddress());
-		dto.setCompetitionDistances(competitionDistanceConverter.convertEntity(new ArrayList<>(entity.getCompetitionDistances())));
+		dto.setDistances(competitionDistanceConverter.convertEntity(entity.getDistances()));
 		return dto;
 	}
 
