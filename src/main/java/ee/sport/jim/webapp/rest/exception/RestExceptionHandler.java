@@ -59,4 +59,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
 		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
+
+	// 500
+
+	@ExceptionHandler({ Exception.class })
+	public ResponseEntity<Object> handleAll(final Exception ex, final WebRequest request) {
+		log.info(ex.getClass().getName());
+		log.error("System error: {}", ex);
+		final ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(),
+			Collections.singletonMap("System error", "Error occurred"));
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
 }
