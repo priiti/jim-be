@@ -131,3 +131,20 @@ ALTER TABLE competition_participant
   ADD CONSTRAINT fk_comp_distance
 FOREIGN KEY (competition_distance_id) REFERENCES competition_distance (id);
 
+CREATE OR REPLACE VIEW v_comp_participant_list
+  AS
+    SELECT
+      c.id                 AS competition_id,
+      c.name               AS competition_name,
+      c.description        AS description,
+      cd.name              AS distance_name,
+      cd.length            AS length,
+      ct.name              AS type_name,
+      cp.competitor_number AS competitor_number,
+      comp.first_name      AS first_name,
+      comp.last_name       AS last_name
+    FROM competition c
+      INNER JOIN competition_distance cd ON c.id = cd.competition_id
+      INNER JOIN championship_type ct ON ct.id = cd.championship_type_id
+      INNER JOIN competition_participant cp ON cp.competition_distance_id = cd.id
+      INNER JOIN competitor comp ON comp.id = cp.competitor_id;
