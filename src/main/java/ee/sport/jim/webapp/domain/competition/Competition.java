@@ -17,8 +17,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -50,11 +50,11 @@ public class Competition extends BaseModel {
 	private String address;
 
 	@OneToMany(mappedBy = "competition", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<CompetitionDistance> distances;
+	private Set<CompetitionDistance> distances = new HashSet<>();
 
 	public void add(CompetitionDistance tempDistance) {
 		if (distances == null) {
-			distances = new ArrayList<>();
+			distances = new HashSet<>();
 		}
 		distances.add(tempDistance);
 		tempDistance.setCompetition(this);
