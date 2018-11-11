@@ -145,6 +145,6 @@ CREATE OR REPLACE VIEW v_comp_participant_list
       comp.last_name       AS last_name
     FROM competition c
       INNER JOIN competition_distance cd ON c.id = cd.competition_id
-      INNER JOIN championship_type ct ON ct.id = cd.championship_type_id
+      LEFT OUTER JOIN championship_type ct ON ct.id = cd.championship_type_id
       INNER JOIN competition_participant cp ON cp.competition_distance_id = cd.id
       INNER JOIN competitor comp ON comp.id = cp.competitor_id;

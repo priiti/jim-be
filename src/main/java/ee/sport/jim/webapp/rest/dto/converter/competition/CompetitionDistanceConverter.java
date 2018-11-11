@@ -5,13 +5,22 @@ import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDistanceDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
 import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class CompetitionDistanceConverter extends GenericConverter<CompetitionDistance, CompetitionDistanceDto> {
-	private final CompetitionPriceConverter competitionPriceConverter = new CompetitionPriceConverter();
-	private final ChampionshipTypeConverter championshipTypeConverter = new ChampionshipTypeConverter();
+	private final CompetitionPriceConverter competitionPriceConverter;
+	private final ChampionshipTypeConverter championshipTypeConverter;
+
+	public CompetitionDistanceConverter(CompetitionPriceConverter competitionPriceConverter,
+																			ChampionshipTypeConverter championshipTypeConverter) {
+		this.competitionPriceConverter = competitionPriceConverter;
+		this.championshipTypeConverter = championshipTypeConverter;
+	}
 
 	@Override
 	public CompetitionDistanceDto convertEntity(CompetitionDistance entity) {
@@ -24,7 +33,7 @@ public class CompetitionDistanceConverter extends GenericConverter<CompetitionDi
 		dto.setStartNumbering(entity.getStartNumbering());
 		Optional<ChampionshipType> optionalType = Optional.ofNullable(entity.getChampionshipType());
 		optionalType.ifPresent(type -> dto.setChampionshipType(championshipTypeConverter.convertEntity(type)));
-		dto.setPrices(competitionPriceConverter.convertEntity(entity.getPrices()));
+		dto.setPrices(competitionPriceConverter.convertEntity(new ArrayList<>(entity.getPrices())));
 		return dto;
 	}
 

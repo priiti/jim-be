@@ -4,11 +4,12 @@ import ee.sport.jim.webapp.domain.competition.Competition;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
 import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class CompetitionConverter extends GenericConverter<Competition, CompetitionDto> {
-	private static final CompetitionDistanceConverter competitionDistanceConverter = new CompetitionDistanceConverter();
 
 	@Override
 	public CompetitionDto convertEntity(Competition entity) {
@@ -19,7 +20,6 @@ public class CompetitionConverter extends GenericConverter<Competition, Competit
 		dto.setEndDate(entity.getEndDate());
 		dto.setDescription(entity.getDescription());
 		dto.setAddress(entity.getAddress());
-		dto.setDistances(competitionDistanceConverter.convertEntity(entity.getDistances()));
 		return dto;
 	}
 

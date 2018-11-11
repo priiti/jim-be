@@ -1,7 +1,7 @@
 package ee.sport.jim.webapp.rest.controller.competition;
 
-import ee.sport.jim.webapp.domain.competition.ParticipantItem;
 import ee.sport.jim.webapp.repository.CompetitionRepository;
+import ee.sport.jim.webapp.rest.dto.competition.CompParticipantInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -30,7 +29,7 @@ public class CompetitionController {
 	}
 
 	@GetMapping(value = "/{competitionId}/participants", produces = APPLICATION_JSON_VALUE)
-	public List<ParticipantItem> getCompetitionParticipants(@PathVariable @NotNull final Long competitionId) {
-		return competitionRepository.findCompetitionParticipants(competitionId);
+	public CompParticipantInfoDto getCompetitionParticipants(@PathVariable @NotNull final Long competitionId) {
+		return competitionRestService.getCompetitionParticipants(competitionId);
 	}
 }

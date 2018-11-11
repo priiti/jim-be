@@ -4,7 +4,9 @@ import ee.sport.jim.webapp.domain.competition.ChampionshipType;
 import ee.sport.jim.webapp.rest.dto.competition.ChampionshipTypeDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
 import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ChampionshipTypeConverter extends GenericConverter<ChampionshipType, ChampionshipTypeDto> {
 	@Override
 	public ChampionshipTypeDto convertEntity(ChampionshipType entity) {

@@ -1,5 +1,6 @@
 package ee.sport.jim.webapp.domain.competition;
 
+import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.domain.shared.BaseModel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,13 +22,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false, exclude = {"competition", "prices", "championshipType"})
+@EqualsAndHashCode(callSuper = false, exclude = {"competition", "prices", "championshipType", "participants"})
 @Entity
 @Table(name = "competition_distance")
 public class CompetitionDistance extends BaseModel {
@@ -57,12 +58,12 @@ public class CompetitionDistance extends BaseModel {
 	@JoinColumn(name = "competition_id")
 	private Competition competition;
 
-	@OneToMany(mappedBy = "distance",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<CompetitionPrice> prices;
+	@OneToMany(mappedBy = "distance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<CompetitionPrice> prices = new HashSet<>();
 
 	public void add(CompetitionPrice tempPrice) {
 		if (prices == null) {
-			prices = new ArrayList<>();
+			prices = new HashSet<>();
 		}
 		prices.add(tempPrice);
 		tempPrice.setDistance(this);
@@ -71,4 +72,15 @@ public class CompetitionDistance extends BaseModel {
 	@OneToOne
 	@JoinColumn(name = "championship_type_id")
 	private ChampionshipType championshipType;
+
+	@OneToMany(mappedBy = "competitionDistance", fetch = FetchType.LAZY)
+	private Set<Participant> participants = new HashSet<>();
+
+	public void add(Participant participant) {
+		if (participants == null) {
+			participants = new HashSet<>();
+		}
+		participants.add(participant);
+		participant.setCompetitionDistance(this);
+	}
 }
