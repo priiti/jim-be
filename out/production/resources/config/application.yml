@@ -19,3 +19,7 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
 #  datasource:
 #    driver-class-name: com.mysql.jdbc.Driver
+
+swagger.api:
+  title: JIM
+  description: JIM application
