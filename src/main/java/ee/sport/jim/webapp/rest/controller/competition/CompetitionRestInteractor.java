@@ -31,7 +31,7 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 		if (!competitionOptional.isPresent()) {
 			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + competitionId);
 		}
-		return competitionDtoFactory.getRegistrationCompetitionDto(competitionOptional.get());
+		return competitionDtoFactory.getCompetitionForRegistrationDto(competitionOptional.get());
 	}
 
 	@Override

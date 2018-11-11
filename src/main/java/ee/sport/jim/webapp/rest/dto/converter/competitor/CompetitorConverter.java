@@ -4,7 +4,9 @@ import ee.sport.jim.webapp.domain.competitor.Competitor;
 import ee.sport.jim.webapp.rest.dto.competitor.ParticipantRegistrationDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
 import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CompetitorConverter extends GenericConverter<Competitor, ParticipantRegistrationDto> {
 	@Override
 	public ParticipantRegistrationDto convertEntity(Competitor entity) {

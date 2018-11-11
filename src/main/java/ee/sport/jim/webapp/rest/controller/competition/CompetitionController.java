@@ -1,6 +1,5 @@
 package ee.sport.jim.webapp.rest.controller.competition;
 
-import ee.sport.jim.webapp.repository.CompetitionRepository;
 import ee.sport.jim.webapp.rest.dto.competition.CompParticipantInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +15,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(value = "/api/v1/competition")
 public class CompetitionController {
 	private final CompetitionRestService competitionRestService;
-	private final CompetitionRepository competitionRepository;
 
-	public CompetitionController(CompetitionRestService competitionRestService, CompetitionRepository competitionRepository) {
+	public CompetitionController(CompetitionRestService competitionRestService) {
 		this.competitionRestService = competitionRestService;
-		this.competitionRepository = competitionRepository;
 	}
 
 	@GetMapping(value = "/{competitionId}/registration", produces = APPLICATION_JSON_VALUE)
-	public CompetitionDto competitionRegistration(@PathVariable @NotNull final Long competitionId) {
+	public CompetitionDto getCompetitionDataForRegistration(@PathVariable @NotNull final Long competitionId) {
 		return competitionRestService.getCompetitionForRegistration(competitionId);
 	}
 

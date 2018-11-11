@@ -21,7 +21,7 @@ public final class CompetitionDtoFactory {
 		this.participantInfoConverter = participantInfoConverter;
 	}
 
-	public CompetitionDto getRegistrationCompetitionDto(Competition competition) {
+	public CompetitionDto getCompetitionForRegistrationDto(Competition competition) {
 		CompetitionDto competitionDto = competitionConverter.convertEntity(competition);
 		competitionDto.setDistances(distanceConverter.convertEntity(new ArrayList<>(competition.getDistances())));
 		return competitionDto;
