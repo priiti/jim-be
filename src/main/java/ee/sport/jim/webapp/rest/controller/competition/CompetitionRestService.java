@@ -7,6 +7,6 @@ public interface CompetitionRestService {
 
 	CompetitionDto getCompetitionForRegistration(long competitionId);
 
-	CompParticipantInfoDto getCompetitionParticipants(long competitionId);
+	CompParticipantInfoDto getCompetitionParticipants(long distanceId, long competitionId, Integer pageNumber, Integer limit);
 
 }

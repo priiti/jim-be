@@ -10,6 +10,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class CompParticipantInfoDto {
-	private CompetitionDto competition;
-	private List<DistanceInfoDto> distanceInfo;
+	private Long distanceParticipantCount;
+	private List<ParticipantInfoDto> participants;
 }

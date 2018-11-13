@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CompetitionDistanceRepository extends JpaRepository<CompetitionDistance, Long> {
+
+	boolean existsByCompetitionId(long competitionId);
+
 }
