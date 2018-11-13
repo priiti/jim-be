@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DistanceInfoDto {
-	private CompetitionDistanceDto distance;
-	private List<ParticipantInfoDto> participants;
+public class CompDistanceInfoDto {
+	private CompetitionDto competition;
+	private List<CompetitionDistanceDto> distances;
 }

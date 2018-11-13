@@ -7,7 +7,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ChampionshipTypeConverter extends GenericConverter<ChampionshipType, ChampionshipTypeDto> {
+public final class ChampionshipTypeConverter extends GenericConverter<ChampionshipType, ChampionshipTypeDto> {
 	@Override
 	public ChampionshipTypeDto convertEntity(ChampionshipType entity) {
 		ChampionshipTypeDto dto = new ChampionshipTypeDto();

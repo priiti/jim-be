@@ -1,5 +1,6 @@
 package ee.sport.jim.webapp.rest.controller.competition;
 
+import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompParticipantInfoDto;
 
@@ -8,5 +9,7 @@ public interface CompetitionRestService {
 	CompetitionDto getCompetitionForRegistration(long competitionId);
 
 	CompParticipantInfoDto getCompetitionParticipants(long distanceId, long competitionId, Integer pageNumber, Integer limit);
+
+	CompDistanceInfoDto getCompetitionDistanceInfo(long competitionId);
 
 }

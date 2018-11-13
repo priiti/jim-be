@@ -1,7 +1,9 @@
 package ee.sport.jim.webapp.rest.controller.competition;
 
+import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompParticipantInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CompetitionController {
 	private final CompetitionRestService competitionRestService;
 
+	@Autowired
 	public CompetitionController(CompetitionRestService competitionRestService) {
 		this.competitionRestService = competitionRestService;
 	}
@@ -31,5 +34,10 @@ public class CompetitionController {
 																													 @PathVariable @NotNull final Long competitionId,
 																													 @PathVariable @NotNull final Long distanceId) {
 		return competitionRestService.getCompetitionParticipants(competitionId, distanceId, pageNumber, limit);
+	}
+
+	@GetMapping(value = "/{competitionId}/info", produces = APPLICATION_JSON_VALUE)
+	public CompDistanceInfoDto getCompetitionDistance(@PathVariable @NotNull final Long competitionId) {
+		return competitionRestService.getCompetitionDistanceInfo(competitionId);
 	}
 }

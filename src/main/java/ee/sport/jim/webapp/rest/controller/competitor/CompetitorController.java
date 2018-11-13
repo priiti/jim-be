@@ -18,6 +18,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CompetitorController {
 	private final CompetitorRestService competitorRestService;
 
+	@Autowired
 	public CompetitorController(CompetitorRestService competitorRestService) {
 		this.competitorRestService = competitorRestService;
 	}

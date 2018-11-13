@@ -7,6 +7,7 @@ import ee.sport.jim.webapp.repository.CompetitionDistanceRepository;
 import ee.sport.jim.webapp.repository.CompetitionRepository;
 import ee.sport.jim.webapp.repository.ParticipantRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class CompetitionServiceImpl implements CompetitionService {
 	private final CompetitionDistanceRepository distanceRepository;
 	private final ParticipantRepository participantRepository;
 
+	@Autowired
 	public CompetitionServiceImpl(CompetitionRepository competitionRepository, CompetitionDistanceRepository distanceRepository,
 																ParticipantRepository participantRepository) {
 		this.competitionRepository = competitionRepository;

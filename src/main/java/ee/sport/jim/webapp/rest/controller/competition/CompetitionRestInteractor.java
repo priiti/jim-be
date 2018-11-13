@@ -3,6 +3,7 @@ package ee.sport.jim.webapp.rest.controller.competition;
 import ee.sport.jim.webapp.domain.competition.Competition;
 import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
 import ee.sport.jim.webapp.domain.competitor.Participant;
+import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompParticipantInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import ee.sport.jim.webapp.rest.dto.converter.competition.CompetitionDtoFactory;
@@ -42,7 +43,7 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 	public CompParticipantInfoDto getCompetitionParticipants(long competitionId, long distanceId, Integer pageNumber, Integer limit) {
 		Optional<CompetitionDistance> optionalDistance = competitionService.getCompetitionDistance(distanceId);
 		if (!optionalDistance.isPresent()) {
-			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + distanceId);
+			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + competitionId);
 		}
 		validateCompetition(optionalDistance.get(), competitionId, distanceId);
 		Page<Participant> participants = competitionService.getCompetitionParticipants(distanceId, PageRequest.of(pageNumber, limit));
@@ -54,9 +55,18 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 		return participantInfo;
 	}
 
+	@Override
+	public CompDistanceInfoDto getCompetitionDistanceInfo(long competitionId) {
+		Optional<Competition> optionalCompetition = competitionService.findById(competitionId);
+		if (!optionalCompetition.isPresent()) {
+			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + competitionId);
+		}
+		return competitionDtoFactory.getCompetitionDistancesInfo(optionalCompetition.get());
+	}
+
 	private void validateCompetition(CompetitionDistance distance, long competitionId, long distanceId) {
 		if (!distance.getCompetition().getId().equals(competitionId) || !distance.getId().equals(distanceId)) {
-			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + distanceId);
+			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + competitionId);
 		}
 	}
 }

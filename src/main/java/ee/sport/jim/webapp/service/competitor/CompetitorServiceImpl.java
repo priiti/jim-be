@@ -9,6 +9,7 @@ import ee.sport.jim.webapp.repository.ParticipantRepository;
 import ee.sport.jim.webapp.rest.exception.ResourceNotFoundException;
 import ee.sport.jim.webapp.service.competition.CompetitionService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class CompetitorServiceImpl implements CompetitorService {
 	private final CompetitorRepository competitorRepository;
 	private final CompetitionService competitionService;
 
+	@Autowired
 	public CompetitorServiceImpl(ParticipantRepository participantRepository, CompetitorRepository competitorRepository,
 															 CompetitionService competitionService) {
 		this.participantRepository = participantRepository;
