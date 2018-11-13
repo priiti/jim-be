@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class CompetitionPriceConverter extends GenericConverter<CompetitionPrice, CompetitionPriceDto> {
+public final class CompetitionPriceConverter extends GenericConverter<CompetitionPrice, CompetitionPriceDto> {
 
 	@Synchronized
 	@Nullable

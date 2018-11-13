@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CompetitionConverter extends GenericConverter<Competition, CompetitionDto> {
+public final class CompetitionConverter extends GenericConverter<Competition, CompetitionDto> {
 
 	@Override
 	public CompetitionDto convertEntity(Competition entity) {

@@ -5,6 +5,7 @@ import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDistanceDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
 import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,10 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class CompetitionDistanceConverter extends GenericConverter<CompetitionDistance, CompetitionDistanceDto> {
+public final class CompetitionDistanceConverter extends GenericConverter<CompetitionDistance, CompetitionDistanceDto> {
 	private final CompetitionPriceConverter competitionPriceConverter;
 	private final ChampionshipTypeConverter championshipTypeConverter;
 
+	@Autowired
 	public CompetitionDistanceConverter(CompetitionPriceConverter competitionPriceConverter,
 																			ChampionshipTypeConverter championshipTypeConverter) {
 		this.competitionPriceConverter = competitionPriceConverter;
