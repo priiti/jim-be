@@ -5,6 +5,7 @@ import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
@@ -25,8 +26,10 @@ public class CompetitionController {
 		return competitionRestService.getCompetitionForRegistration(competitionId);
 	}
 
-	@GetMapping(value = "/{competitionId}/participants", produces = APPLICATION_JSON_VALUE)
-	public CompParticipantInfoDto getCompetitionParticipants(@PathVariable @NotNull final Long competitionId) {
-		return competitionRestService.getCompetitionParticipants(competitionId);
+	@GetMapping(value = "/{competitionId}/participants/{distanceId}", produces = APPLICATION_JSON_VALUE)
+	public CompParticipantInfoDto getCompetitionParticipants(@RequestParam final Integer pageNumber, final Integer limit,
+																													 @PathVariable @NotNull final Long competitionId,
+																													 @PathVariable @NotNull final Long distanceId) {
+		return competitionRestService.getCompetitionParticipants(competitionId, distanceId, pageNumber, limit);
 	}
 }

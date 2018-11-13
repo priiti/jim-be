@@ -1,11 +1,13 @@
 package ee.sport.jim.webapp.rest.dto.converter.competition;
 
 import ee.sport.jim.webapp.domain.competition.Competition;
+import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.rest.dto.competition.CompParticipantInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public final class CompetitionDtoFactory {
@@ -13,8 +15,7 @@ public final class CompetitionDtoFactory {
 	private final CompetitionDistanceConverter distanceConverter;
 	private final CompParticipantInfoConverter participantInfoConverter;
 
-	public CompetitionDtoFactory(CompetitionConverter competitionConverter,
-															 CompetitionDistanceConverter distanceConverter,
+	public CompetitionDtoFactory(CompetitionConverter competitionConverter, CompetitionDistanceConverter distanceConverter,
 															 CompParticipantInfoConverter participantInfoConverter) {
 		this.competitionConverter = competitionConverter;
 		this.distanceConverter = distanceConverter;
@@ -27,7 +28,7 @@ public final class CompetitionDtoFactory {
 		return competitionDto;
 	}
 
-	public CompParticipantInfoDto getCompetitionParticipantsInfo(Competition competition) {
-		return participantInfoConverter.convertEntity(competition);
+	public CompParticipantInfoDto getCompetitionParticipantsInfo(List<Participant> participants) {
+		return participantInfoConverter.convert(participants);
 	}
 }
