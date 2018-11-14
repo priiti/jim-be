@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ee.sport.jim.webapp.rest.exception.ErrorConstants.RESOURCE_NOT_FOUND;
+
 @Slf4j
 @RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -59,6 +61,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
 		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
+
+	// 404
+
+	@ExceptionHandler({ ResourceNotFoundException.class })
+	public ResponseEntity<Object> handleResourceNotFoundException(final ResourceNotFoundException ex, final WebRequest request) {
+		log.info(ex.getClass().getName());
+		final Map<String, String> errors = new HashMap<>();
+		errors.put(RESOURCE_NOT_FOUND, ex.getMessage());
+		final ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), errors);
+		return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+
 
 	// 500
 
