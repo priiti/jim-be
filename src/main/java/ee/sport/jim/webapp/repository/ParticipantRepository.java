@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
 
-	Page<Participant> findByCompetitionDistanceId(long competitionDistanceId, Pageable page);
+	Page<Participant> findByCompetitionDistanceIdAndPaymentFulfilled(long competitionDistanceId, boolean paymentFulfilled, Pageable page);
 
 }
