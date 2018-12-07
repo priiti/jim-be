@@ -45,7 +45,7 @@ CREATE TABLE competition_distance (
   special_notes        TEXT,
   competition_id       INT(11)                NOT NULL,
   start_time           TIMESTAMP              NOT NULL,
-  start_numbering      INTEGER                NULL,
+  start_numbering      INTEGER                NOT NULL,
   -- TIMESTAMP
   created              TIMESTAMP              NOT NULL,
   created_by           VARCHAR(255)           NOT NULL,
