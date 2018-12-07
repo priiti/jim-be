@@ -61,7 +61,7 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 	}
 
 	@Override
-	public ParticipantsInfoDto getAllCompParticipants(long distanceId, long competitionId, Integer pageNumber, Integer resultLimit) {
+	public ParticipantsInfoDto getAllCompParticipants(long competitionId, long distanceId, Integer pageNumber, Integer resultLimit) {
 		Optional<CompetitionDistance> optionalDistance = competitionService.getCompetitionDistance(distanceId);
 		if (!optionalDistance.isPresent()) {
 			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + competitionId);
