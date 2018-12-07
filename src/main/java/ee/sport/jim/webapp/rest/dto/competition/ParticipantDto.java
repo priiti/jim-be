@@ -1,5 +1,6 @@
 package ee.sport.jim.webapp.rest.dto.competition;
 
+import ee.sport.jim.system.core.BooleanHolder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,9 +20,9 @@ public class ParticipantDto {
 	private String sportsClub;
 	private CompetitionDistanceDto distance;
 	private Integer participationCount;
-	private boolean paymentFulfilled;
-	private boolean publishData;
-	private boolean newsletterSubscription;
-	private boolean numberPrinted;
-	private boolean envelopePrinted;
+	private BooleanHolder paymentFulfilled;
+	private BooleanHolder publishData;
+	private BooleanHolder newsletterSubscription;
+	private BooleanHolder numberPrinted;
+	private BooleanHolder envelopePrinted;
 }

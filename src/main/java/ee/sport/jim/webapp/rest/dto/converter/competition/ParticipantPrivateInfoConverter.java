@@ -1,5 +1,6 @@
 package ee.sport.jim.webapp.rest.dto.converter.competition;
 
+import ee.sport.jim.system.core.BooleanHolder;
 import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.rest.dto.competition.ParticipantDto;
 import ee.sport.jim.webapp.rest.dto.competition.ParticipantsInfoDto;
@@ -23,11 +24,11 @@ public final class ParticipantPrivateInfoConverter implements Converter<List<Par
 		dto.setDateOfBirth(participant.getCompetitor().getDateOfBirth());
 		dto.setSportsClub(participant.getCompetitor().getSportsClub());
 		dto.setParticipationCount(participant.getParticipationCount());
-		dto.setPaymentFulfilled(participant.isPaymentFulfilled());
-		dto.setPublishData(participant.getCompetitor().isPublishData());
-		dto.setNewsletterSubscription(participant.getCompetitor().isNewsletterSubscription());
-		dto.setNumberPrinted(participant.isNumberPrinted());
-		dto.setEnvelopePrinted(participant.isEnvelopePrinted());
+		dto.setPaymentFulfilled(new BooleanHolder(participant.isPaymentFulfilled()));
+		dto.setPublishData(new BooleanHolder(participant.getCompetitor().isPublishData()));
+		dto.setNewsletterSubscription(new BooleanHolder(participant.getCompetitor().isNewsletterSubscription()));
+		dto.setNumberPrinted(new BooleanHolder(participant.isNumberPrinted()));
+		dto.setEnvelopePrinted(new BooleanHolder(participant.isEnvelopePrinted()));
 		return dto;
 	};
 
