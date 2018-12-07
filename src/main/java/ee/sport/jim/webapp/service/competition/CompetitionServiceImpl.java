@@ -60,7 +60,7 @@ public class CompetitionServiceImpl implements CompetitionService {
 		Participant participant = optionalParticipant.get();
 		participant.setPaymentFulfilled(!participant.isPaymentFulfilled());
 		if (Objects.isNull(participant.getCompetitorNumber())) {
-
+			Integer competitorNumber = numberGeneratorService.generateCompetitorNumber(participant.getCompetitionDistance());
 		}
 		// TODO -> generate competitor number
 		return Optional.of(participantRepository.save(participant));

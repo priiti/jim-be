@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface NumberGeneratorService {
 
-	Integer generateCompetitorNumber(CompetitionDistance competitionDistance, int startingNumber);
+	Integer generateCompetitorNumber(CompetitionDistance competitionDistance);
 
 }
