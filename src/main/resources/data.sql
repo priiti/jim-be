@@ -2,16 +2,29 @@ INSERT INTO championship_type (NAME, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
 VALUES ('Raplamaa Meistrivõistlused', sysdate, 'SYSTEM', sysdate, 'SYSTEM');
 
 INSERT INTO competition (NAME, START_DATE, END_DATE, DESCRIPTION, ADDRESS, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
-VALUES ('Järvamaa Igamehemaraton', PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'),
+VALUES ('Järvakandi Igamehemaraton', PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'),
         PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'),
         'Jooksutrass Järvakandi alevis 4.2km ringil. Maraton 10 ringi. Sinu maraton 1, 2, 3, ... vöi 10 ringi',
         'Järvakandi, Tallinna mnt 43', sysdate, 'SYSTEM', sysdate, 'SYSTEM'
 );
 
+INSERT INTO organizer (NAME, EMAIL, PHONE, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
+VALUES (
+  'Järvakandi Wellod',
+  'jarvakandi.wellod@jim.com',
+  '56123456',
+  sysdate, 'SYSTEM', sysdate, 'SYSTEM');
+
+INSERT INTO organizer_competition (ORGANIZER_ID, COMPETITION_ID, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
+VALUES (
+  SELECT id FROM organizer WHERE name = 'Järvakandi Wellod',
+  SELECT id FROM competition WHERE name = 'Järvakandi Igamehemaraton',
+  sysdate, 'SYSTEM', sysdate, 'SYSTEM');
+
 INSERT INTO competition_distance (NAME, LENGTH, CHAMPIONSHIP_TYPE_ID, SPECIAL_NOTES, COMPETITION_ID, START_TIME, START_NUMBERING, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
 VALUES ('Igamehejooks', NULL, NULL, 'Jookse palju jaksad', (SELECT id
                                                             FROM competition
-                                                            WHERE name = 'Järvamaa Igamehemaraton'),
+                                                            WHERE name = 'Järvakandi Igamehemaraton'),
   PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'), 1, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
 );
 
@@ -21,7 +34,7 @@ VALUES ('Maraton', 42.2, (SELECT id
                           WHERE name = 'Raplamaa Meistrivõistlused'), 'Täispikk maraton',
   (SELECT id
    FROM competition
-   WHERE name = 'Järvamaa Igamehemaraton'), PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'),
+   WHERE name = 'Järvakandi Igamehemaraton'), PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'),
   500, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
 );
 

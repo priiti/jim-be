@@ -28,7 +28,10 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false, exclude = {"competition", "prices", "championshipType", "participants"})
+@EqualsAndHashCode(
+	callSuper = false,
+	exclude = {"competition", "prices", "championshipType", "participants"}
+)
 @Entity
 @Table(name = "competition_distance")
 public class CompetitionDistance extends BaseModel {

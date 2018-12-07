@@ -131,6 +131,31 @@ ALTER TABLE competition_participant
   ADD CONSTRAINT fk_comp_distance
 FOREIGN KEY (competition_distance_id) REFERENCES competition_distance (id);
 
+CREATE TABLE organizer (
+  id          INT(11) AUTO_INCREMENT NOT NULL,
+  name        VARCHAR(255)           NOT NULL,
+  email       VARCHAR(255)           NOT NULL,
+  phone       VARCHAR(55)            NOT NULL,
+  -- TIMESTAMP
+  created     TIMESTAMP              NOT NULL,
+  created_by  VARCHAR(255)           NOT NULL,
+  modified    TIMESTAMP              NOT NULL,
+  modified_by VARCHAR(255)           NOT NULL
+);
+
+ALTER table organizer
+  ADD CONSTRAINT pk_organizer PRIMARY KEY (id);
+
+CREATE TABLE organizer_competition (
+  organizer_id   INT(11)      NOT NULL,
+  competition_id INT(11)      NOT NULL,
+  -- TIMESTAMP
+  created        TIMESTAMP    NOT NULL,
+  created_by     VARCHAR(255) NOT NULL,
+  modified       TIMESTAMP    NOT NULL,
+  modified_by    VARCHAR(255) NOT NULL,
+);
+
 CREATE OR REPLACE VIEW v_comp_participant_list
   AS
     SELECT

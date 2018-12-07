@@ -1,5 +1,6 @@
 package ee.sport.jim.webapp.domain.competition;
 
+import ee.sport.jim.webapp.domain.organizer.Organizer;
 import ee.sport.jim.webapp.domain.shared.BaseModel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -23,7 +25,10 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false, exclude = {"distances"})
+@EqualsAndHashCode(
+	callSuper = false,
+	exclude = {"distances", "organizers"}
+)
 @Entity
 @Table(name = "competition")
 public class Competition extends BaseModel {
@@ -51,6 +56,9 @@ public class Competition extends BaseModel {
 
 	@OneToMany(mappedBy = "competition", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<CompetitionDistance> distances = new HashSet<>();
+
+	@ManyToMany(mappedBy = "competitions")
+	private Set<Organizer> organizers = new HashSet<>();
 
 	public void add(CompetitionDistance tempDistance) {
 		if (distances == null) {
