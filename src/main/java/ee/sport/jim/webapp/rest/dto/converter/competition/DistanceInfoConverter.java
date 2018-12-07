@@ -13,11 +13,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public final class CompDistanceInfoConverter implements Converter<Competition, CompDistanceInfoDto> {
+public final class DistanceInfoConverter implements Converter<Competition, CompDistanceInfoDto> {
 	private final CompetitionConverter competitionConverter;
 
 	@Autowired
-	public CompDistanceInfoConverter(CompetitionConverter competitionConverter) {
+	public DistanceInfoConverter(CompetitionConverter competitionConverter) {
 		this.competitionConverter = competitionConverter;
 	}
 

@@ -24,7 +24,7 @@ public class CompetitorController {
 	}
 
 	@PostMapping(value = "/register", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity register(@RequestBody @NotNull @Valid ParticipantRegistrationDto participantRegistrationDto) {
+	public ResponseEntity<?> register(@RequestBody @NotNull @Valid ParticipantRegistrationDto participantRegistrationDto) {
 		competitorRestService.register(participantRegistrationDto);
 		return ResponseEntity.ok().build();
 	}

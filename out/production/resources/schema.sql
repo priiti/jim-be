@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS championship_type;
 DROP TABLE IF EXISTS competition;
 DROP TABLE IF EXISTS competition_participant;
 DROP TABLE IF EXISTS competitor;
+DROP TABLE IF EXISTS organizer;
+DROP TABLE IF EXISTS organizer_competition;
 
 CREATE TABLE competition (
   id          INT(11) AUTO_INCREMENT NOT NULL,

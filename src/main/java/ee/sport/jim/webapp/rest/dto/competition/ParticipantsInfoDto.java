@@ -4,12 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class ParticipantInfoDto {
-	private Long participantId;
-	private String firstName;
-	private String lastName;
-	private Integer competitorNumber;
+public class ParticipantsInfoDto {
+	private Long distanceParticipantCount;
+	private List<ParticipantDto> participants;
 }

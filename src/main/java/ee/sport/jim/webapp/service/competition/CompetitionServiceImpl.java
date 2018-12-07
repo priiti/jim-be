@@ -36,9 +36,13 @@ public class CompetitionServiceImpl implements CompetitionService {
 	}
 
 	@Override
-	public Page<Participant> getCompetitionParticipants(long distanceId, Pageable page) {
-		final boolean paymentFulfilled = true;
-		return participantRepository.findByCompetitionDistanceIdAndPaymentFulfilled(distanceId, paymentFulfilled, page);
+	public Page<Participant> getPaidCompetitionParticipants(long distanceId, Pageable page) {
+		return participantRepository.findByCompetitionDistanceIdAndPaymentFulfilled(distanceId, true, page);
+	}
+
+	@Override
+	public Page<Participant> getAllCompetitionParticipants(long distanceId, Pageable page) {
+		return participantRepository.findAll(page);
 	}
 
 	@Override

@@ -3,9 +3,10 @@ package ee.sport.jim.webapp.rest.controller.competition;
 import ee.sport.jim.webapp.domain.competition.Competition;
 import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
 import ee.sport.jim.webapp.domain.competitor.Participant;
+import ee.sport.jim.webapp.rest.ResultSetEnum;
 import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
-import ee.sport.jim.webapp.rest.dto.competition.CompParticipantInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
+import ee.sport.jim.webapp.rest.dto.competition.ParticipantsInfoDto;
 import ee.sport.jim.webapp.rest.dto.converter.competition.CompetitionDtoFactory;
 import ee.sport.jim.webapp.rest.exception.ResourceNotFoundException;
 import ee.sport.jim.webapp.service.competition.CompetitionService;
@@ -40,19 +41,40 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 	}
 
 	@Override
-	public CompParticipantInfoDto getCompetitionParticipants(long competitionId, long distanceId, Integer pageNumber, Integer limit) {
+	public ParticipantsInfoDto getPaidCompParticipants(long competitionId, long distanceId, Integer pageNumber, Integer resultLimit) {
 		Optional<CompetitionDistance> optionalDistance = competitionService.getCompetitionDistance(distanceId);
 		if (!optionalDistance.isPresent()) {
 			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + competitionId);
 		}
 		validateCompetition(optionalDistance.get(), competitionId, distanceId);
-		Page<Participant> participants = competitionService.getCompetitionParticipants(distanceId, PageRequest.of(pageNumber, limit));
-		if (participants.getTotalElements() < 1) {
+
+		int page = pageNumber != null ? pageNumber : ResultSetEnum.DEFAULT_PAGE_NUMBER.getValue();
+		int limit = resultLimit != null ? resultLimit : ResultSetEnum.DEFAULT_PAGE_RESULT_LIMIT.getValue();
+		Page<Participant> participants = competitionService.getPaidCompetitionParticipants(distanceId, PageRequest.of(page, limit));
+		if (participants.getTotalElements() < 1) { // TODO - refactor better check and result
 			return null;
 		}
-		CompParticipantInfoDto participantInfo = competitionDtoFactory.getCompetitionParticipantsInfo(participants.getContent());
-		participantInfo.setDistanceParticipantCount(participants.getTotalElements());
-		return participantInfo;
+		ParticipantsInfoDto participantsInfoDto = competitionDtoFactory.getPublicCompParticipantsInfo(participants.getContent());
+		participantsInfoDto.setDistanceParticipantCount(participants.getTotalElements());
+		return participantsInfoDto;
+	}
+
+	@Override
+	public ParticipantsInfoDto getAllCompParticipants(long distanceId, long competitionId, Integer pageNumber, Integer resultLimit) {
+		Optional<CompetitionDistance> optionalDistance = competitionService.getCompetitionDistance(distanceId);
+		if (!optionalDistance.isPresent()) {
+			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + competitionId);
+		}
+		validateCompetition(optionalDistance.get(), competitionId, distanceId);
+		int page = pageNumber != null ? pageNumber : ResultSetEnum.DEFAULT_PAGE_NUMBER.getValue();
+		int limit = resultLimit != null ? resultLimit : ResultSetEnum.DEFAULT_PAGE_RESULT_LIMIT.getValue();
+		Page<Participant> participants = competitionService.getAllCompetitionParticipants(distanceId, PageRequest.of(page, limit));
+		if (participants.getTotalElements() < 1) { // TODO - refactor better check and result
+			return null;
+		}
+		ParticipantsInfoDto participantsInfoDto = competitionDtoFactory.getPrivateCompParticipantsInfo(participants.getContent());
+		participantsInfoDto.setDistanceParticipantCount(participants.getTotalElements());
+		return participantsInfoDto;
 	}
 
 	@Override

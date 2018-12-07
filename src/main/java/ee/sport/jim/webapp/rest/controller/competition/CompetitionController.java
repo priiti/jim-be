@@ -1,7 +1,7 @@
 package ee.sport.jim.webapp.rest.controller.competition;
 
 import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
-import ee.sport.jim.webapp.rest.dto.competition.CompParticipantInfoDto;
+import ee.sport.jim.webapp.rest.dto.competition.ParticipantsInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,15 +29,24 @@ public class CompetitionController {
 		return competitionRestService.getCompetitionForRegistration(competitionId);
 	}
 
-	@GetMapping(value = "/{competitionId}/participants/{distanceId}", produces = APPLICATION_JSON_VALUE)
-	public CompParticipantInfoDto getCompetitionParticipants(@RequestParam final Integer pageNumber, final Integer limit,
-																													 @PathVariable @NotNull final Long competitionId,
-																													 @PathVariable @NotNull final Long distanceId) {
-		return competitionRestService.getCompetitionParticipants(competitionId, distanceId, pageNumber, limit);
+	@GetMapping(value = "/public/{competitionId}/participants/{distanceId}", produces = APPLICATION_JSON_VALUE)
+	public ParticipantsInfoDto getPublicCompParticipants(@RequestParam(required = false) final Integer pageNumber,
+																											 @RequestParam(required = false) final Integer limit,
+																											 @PathVariable @NotNull final Long competitionId,
+																											 @PathVariable @NotNull final Long distanceId) {
+		return competitionRestService.getPaidCompParticipants(competitionId, distanceId, pageNumber, limit);
 	}
 
 	@GetMapping(value = "/{competitionId}/info", produces = APPLICATION_JSON_VALUE)
 	public CompDistanceInfoDto getCompetitionDistance(@PathVariable @NotNull final Long competitionId) {
 		return competitionRestService.getCompetitionDistanceInfo(competitionId);
+	}
+
+	@GetMapping(value = "/private/{competitionId}/participants/{distanceId}", produces = APPLICATION_JSON_VALUE)
+	public ParticipantsInfoDto getPrivateCompParticipants(@RequestParam(required = false) final Integer pageNumber,
+																												@RequestParam(required = false) final Integer limit,
+																												@PathVariable @NotNull final Long competitionId,
+																												@PathVariable @NotNull final Long distanceId) {
+		return competitionRestService.getAllCompParticipants(competitionId, distanceId, pageNumber, limit);
 	}
 }

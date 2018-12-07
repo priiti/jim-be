@@ -13,7 +13,9 @@ public interface CompetitionService extends CrudService<Competition, Long> {
 
 	Optional<CompetitionDistance> getCompetitionDistance(long distanceId);
 
-	Page<Participant> getCompetitionParticipants(long distanceId, Pageable page);
+	Page<Participant> getPaidCompetitionParticipants(long distanceId, Pageable page);
+
+	Page<Participant> getAllCompetitionParticipants(long distanceId, Pageable page);
 
 	boolean existsById(long competitionId);
 

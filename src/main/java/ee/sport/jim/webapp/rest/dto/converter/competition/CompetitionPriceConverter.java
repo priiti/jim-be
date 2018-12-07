@@ -3,9 +3,7 @@ package ee.sport.jim.webapp.rest.dto.converter.competition;
 import ee.sport.jim.webapp.domain.competition.CompetitionPrice;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionPriceDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
-import lombok.Synchronized;
 import org.apache.commons.lang3.NotImplementedException;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -15,8 +13,6 @@ import java.util.stream.Collectors;
 @Component
 public final class CompetitionPriceConverter extends GenericConverter<CompetitionPrice, CompetitionPriceDto> {
 
-	@Synchronized
-	@Nullable
 	@Override
 	public CompetitionPriceDto convertEntity(CompetitionPrice entity) {
 		CompetitionPriceDto dto = new CompetitionPriceDto();
