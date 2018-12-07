@@ -42,7 +42,7 @@ public class CompetitionServiceImpl implements CompetitionService {
 
 	@Override
 	public Page<Participant> getAllCompetitionParticipants(long distanceId, Pageable page) {
-		return participantRepository.findAll(page);
+		return participantRepository.findByCompetitionDistanceId(distanceId, page);
 	}
 
 	@Override

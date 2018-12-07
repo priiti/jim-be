@@ -11,6 +11,7 @@ import ee.sport.jim.webapp.rest.dto.converter.competition.CompetitionDtoFactory;
 import ee.sport.jim.webapp.rest.exception.ResourceNotFoundException;
 import ee.sport.jim.webapp.service.competition.CompetitionService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 	private final CompetitionService competitionService;
 	private final CompetitionDtoFactory competitionDtoFactory;
 
+	@Autowired
 	public CompetitionRestInteractor(CompetitionService competitionService, CompetitionDtoFactory competitionDtoFactory) {
 		this.competitionService = competitionService;
 		this.competitionDtoFactory = competitionDtoFactory;
