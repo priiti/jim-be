@@ -26,6 +26,7 @@ public class ParticipantRegistrationDto {
 	private LocalDateTime dateOfBirth;
 	private String sportsClub;
 	private Integer participationCount;
+	private boolean championshipParticipation;
 	@NotNull
 	private boolean newsletterSubscription;
 	@NotNull
