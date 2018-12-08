@@ -48,7 +48,7 @@ public class CompetitionServiceImpl implements CompetitionService {
 
 	@Override
 	public Page<Participant> getAllCompetitionParticipants(long distanceId, Pageable page) {
-		return participantRepository.findAll(page);
+		return participantRepository.findByCompetitionDistanceId(distanceId, page);
 	}
 
 	@Override
@@ -61,8 +61,8 @@ public class CompetitionServiceImpl implements CompetitionService {
 		participant.setPaymentFulfilled(!participant.isPaymentFulfilled());
 		if (Objects.isNull(participant.getCompetitorNumber())) {
 			Integer competitorNumber = numberGeneratorService.generateCompetitorNumber(participant.getCompetitionDistance());
+			participant.setCompetitorNumber(competitorNumber);
 		}
-		// TODO -> generate competitor number
 		return Optional.of(participantRepository.save(participant));
 	}
 
