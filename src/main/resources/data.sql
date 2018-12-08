@@ -25,7 +25,7 @@ INSERT INTO competition_distance (NAME, LENGTH, CHAMPIONSHIP_TYPE_ID, SPECIAL_NO
 VALUES ('Igamehejooks', NULL, NULL, 'Jookse palju jaksad', (SELECT id
                                                             FROM competition
                                                             WHERE name = 'Järvakandi Igamehemaraton'),
-  PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'), 1, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
+  PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'), 500, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
 );
 
 INSERT INTO competition_distance (NAME, LENGTH, CHAMPIONSHIP_TYPE_ID, SPECIAL_NOTES, COMPETITION_ID, START_TIME, START_NUMBERING, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
@@ -34,8 +34,8 @@ VALUES ('Maraton', 42.2, (SELECT id
                           WHERE name = 'Raplamaa Meistrivõistlused'), 'Täispikk maraton',
   (SELECT id
    FROM competition
-   WHERE name = 'Järvakandi Igamehemaraton'), PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'),
-  500, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
+   WHERE name = 'Järvakandi Igamehemaraton'),
+  PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'), 1, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
 );
 
 INSERT INTO competition_price (COMPETITION_DISTANCE_ID, START_DATE, END_DATE, PRICE, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)

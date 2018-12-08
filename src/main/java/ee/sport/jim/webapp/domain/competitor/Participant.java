@@ -33,6 +33,9 @@ public class Participant extends BaseModel {
 	@Column(name = "participation_count")
 	private Integer participationCount;
 
+	@Column(name = "championship_participation")
+	private boolean championshipParticipation;
+
 	@Column(name = "payment_fulfilled")
 	private boolean paymentFulfilled;
 

@@ -56,6 +56,9 @@ public class CompetitionDistance extends BaseModel {
 	@Column(name = "start_numbering")
 	private Integer startNumbering;
 
+	@Column(name = "current_competitor_number")
+	private Integer currentCompetitorNumber;
+
 	@ManyToOne(fetch = FetchType.LAZY,
 		cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinColumn(name = "competition_id")

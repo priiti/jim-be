@@ -25,6 +25,7 @@ public final class ParticipantPrivateInfoConverter implements Converter<List<Par
 		dto.setSportsClub(participant.getCompetitor().getSportsClub());
 		dto.setParticipationCount(participant.getParticipationCount());
 		dto.setPaymentFulfilled(new BooleanHolder(participant.isPaymentFulfilled()));
+		dto.setChampionshipParticipation(new BooleanHolder(participant.isChampionshipParticipation()));
 		dto.setPublishData(new BooleanHolder(participant.getCompetitor().isPublishData()));
 		dto.setNewsletterSubscription(new BooleanHolder(participant.getCompetitor().isNewsletterSubscription()));
 		dto.setNumberPrinted(new BooleanHolder(participant.isNumberPrinted()));

@@ -17,6 +17,8 @@ spring:
         order_by.default_null_ordering: last
         type: trace
         dialect: org.hibernate.dialect.H2Dialect
+  jackson:
+    default-property-inclusion: non_null
 #  datasource:
 #    driver-class-name: com.mysql.jdbc.Driver
 

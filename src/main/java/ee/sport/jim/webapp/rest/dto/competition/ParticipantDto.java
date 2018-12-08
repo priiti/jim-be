@@ -21,6 +21,7 @@ public class ParticipantDto {
 	private CompetitionDistanceDto distance;
 	private Integer participationCount;
 	private BooleanHolder paymentFulfilled;
+	private BooleanHolder championshipParticipation;
 	private BooleanHolder publishData;
 	private BooleanHolder newsletterSubscription;
 	private BooleanHolder numberPrinted;

@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -86,6 +87,15 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + competitionId);
 		}
 		return competitionDtoFactory.getCompetitionDistancesInfo(optionalCompetition.get());
+	}
+
+	@Override
+	public ResponseEntity<?> updateParticipantPaymentInfo(Long participantId) {
+		Optional<Participant> optionalParticipant = competitionService.updateParticipantPaymentInfo(participantId);
+		if (!optionalParticipant.isPresent()) {
+			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Participant not found with ID: " + participantId);
+		}
+		return ResponseEntity.ok().build();
 	}
 
 	private void validateCompetition(CompetitionDistance distance, long competitionId, long distanceId) {
