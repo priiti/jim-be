@@ -38,19 +38,20 @@ ALTER TABLE championship_type
   ADD CONSTRAINT pk_champ_type PRIMARY KEY (id);
 
 CREATE TABLE competition_distance (
-  id                   INT(11) AUTO_INCREMENT NOT NULL,
-  name                 VARCHAR(255)           NOT NULL,
-  length               DECIMAL                NULL,
-  championship_type_id INT(11)                NULL,
-  special_notes        TEXT,
-  competition_id       INT(11)                NOT NULL,
-  start_time           TIMESTAMP              NOT NULL,
-  start_numbering      INTEGER                NOT NULL,
+  id                        INT(11) AUTO_INCREMENT NOT NULL,
+  name                      VARCHAR(255)           NOT NULL,
+  length                    DECIMAL                NULL,
+  championship_type_id      INT(11)                NULL,
+  special_notes             TEXT,
+  competition_id            INT(11)                NOT NULL,
+  start_time                TIMESTAMP              NOT NULL,
+  start_numbering           INTEGER                NOT NULL,
+  current_competitor_number INTEGER DEFAULT (0)    NOT NULL,
   -- TIMESTAMP
-  created              TIMESTAMP              NOT NULL,
-  created_by           VARCHAR(255)           NOT NULL,
-  modified             TIMESTAMP              NOT NULL,
-  modified_by          VARCHAR(255)           NOT NULL
+  created                   TIMESTAMP              NOT NULL,
+  created_by                VARCHAR(255)           NOT NULL,
+  modified                  TIMESTAMP              NOT NULL,
+  modified_by               VARCHAR(255)           NOT NULL
 );
 
 ALTER TABLE competition_distance
