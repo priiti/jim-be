@@ -106,20 +106,21 @@ ALTER TABLE competitor
   ADD CONSTRAINT pk_competitor PRIMARY KEY (id);
 
 CREATE TABLE competition_participant (
-  id                      INT(11) AUTO_INCREMENT NOT NULL,
-  competitor_id           INT(11)                NOT NULL,
-  competition_distance_id INT(11)                NOT NULL,
-  participation_count     INT                    NULL,
-  payment_fulfilled       BIT(1) DEFAULT 0,
-  number_printed          BIT(1) DEFAULT 0,
-  envelope_printed        BIT(1) DEFAULT 0,
-  competitor_number       INT                    NULL,
-  chip_id                 INT(11)                NULL,
+  id                         INT(11) AUTO_INCREMENT NOT NULL,
+  competitor_id              INT(11)                NOT NULL,
+  competition_distance_id    INT(11)                NOT NULL,
+  participation_count        INT                    NULL,
+  payment_fulfilled          BIT(1) DEFAULT 0,
+  number_printed             BIT(1) DEFAULT 0,
+  envelope_printed           BIT(1) DEFAULT 0,
+  championship_participation BIT(1) DEFAULT 0,
+  competitor_number          INT                    NULL,
+  chip_id                    INT(11)                NULL,
   -- TIMESTAMP
-  created                 TIMESTAMP              NOT NULL,
-  created_by              VARCHAR(255)           NOT NULL,
-  modified                TIMESTAMP              NOT NULL,
-  modified_by             VARCHAR(255)           NOT NULL
+  created                    TIMESTAMP              NOT NULL,
+  created_by                 VARCHAR(255)           NOT NULL,
+  modified                   TIMESTAMP              NOT NULL,
+  modified_by                VARCHAR(255)           NOT NULL
 );
 
 ALTER TABLE competition_participant

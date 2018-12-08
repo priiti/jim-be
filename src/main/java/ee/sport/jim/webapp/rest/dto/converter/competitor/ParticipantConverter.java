@@ -17,6 +17,7 @@ public class ParticipantConverter extends GenericConverter<Participant, Particip
 	public Participant convertDto(ParticipantRegistrationDto dto) {
 		Participant participant = new Participant();
 		participant.setParticipationCount(dto.getParticipationCount());
+		participant.setChampionshipParticipation(dto.isChampionshipParticipation());
 		participant.setPaymentFulfilled(false);
 		participant.setNumberPrinted(false);
 		participant.setEnvelopePrinted(false);
