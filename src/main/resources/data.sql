@@ -77,3 +77,16 @@ VALUES ((SELECT id
         25,
         sysdate, 'SYSTEM', sysdate, 'SYSTEM'
 );
+
+INSERT INTO competitor (first_name, last_name, email, phone, gender, date_of_birth, sports_club, newsletter_subscription, publish_data, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
+VALUES (
+    'Mart', 'Random', 'mart.random@random.ee', '56123456', 'Mees', PARSEDATETIME('11.10.1975 00:00:00', 'dd.MM.yyyy hh:mm:ss'),
+  'Raplakad', false, true, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
+);
+
+INSERT INTO competition_participant (competitor_id, competition_distance_id, participation_count, championship_participation, payment_fulfilled, number_printed, envelope_printed, competitor_number, chip_id, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
+VALUES (
+  (SELECT id FROM competitor WHERE email = 'mart.random@random.ee'),
+  (SELECT id FROM competition_distance WHERE name = 'Igamehejooks'),
+  1, false, false, false, false, null, null, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
+);

@@ -3,7 +3,6 @@ package ee.sport.jim.webapp.rest.controller.competition;
 import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import ee.sport.jim.webapp.rest.dto.competition.ParticipantsInfoDto;
-import org.springframework.http.ResponseEntity;
 
 public interface CompetitionRestService {
 
@@ -14,7 +13,4 @@ public interface CompetitionRestService {
 	ParticipantsInfoDto getAllCompParticipants(long distanceId, long competitionId, Integer pageNumber, Integer limit);
 
 	CompDistanceInfoDto getCompetitionDistanceInfo(long competitionId);
-
-	ResponseEntity<?> updateParticipantPaymentInfo(Long participantId);
-
 }

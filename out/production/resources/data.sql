@@ -25,7 +25,7 @@ INSERT INTO competition_distance (NAME, LENGTH, CHAMPIONSHIP_TYPE_ID, SPECIAL_NO
 VALUES ('Igamehejooks', NULL, NULL, 'Jookse palju jaksad', (SELECT id
                                                             FROM competition
                                                             WHERE name = 'Järvakandi Igamehemaraton'),
-  PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'), 1, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
+  PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'), 500, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
 );
 
 INSERT INTO competition_distance (NAME, LENGTH, CHAMPIONSHIP_TYPE_ID, SPECIAL_NOTES, COMPETITION_ID, START_TIME, START_NUMBERING, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
@@ -34,8 +34,8 @@ VALUES ('Maraton', 42.2, (SELECT id
                           WHERE name = 'Raplamaa Meistrivõistlused'), 'Täispikk maraton',
   (SELECT id
    FROM competition
-   WHERE name = 'Järvakandi Igamehemaraton'), PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'),
-  500, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
+   WHERE name = 'Järvakandi Igamehemaraton'),
+  PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'), 1, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
 );
 
 INSERT INTO competition_price (COMPETITION_DISTANCE_ID, START_DATE, END_DATE, PRICE, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
@@ -76,4 +76,17 @@ VALUES ((SELECT id
         PARSEDATETIME('25.08.2019 00:00:00', 'dd.MM.yyyy hh:mm:ss'),
         25,
         sysdate, 'SYSTEM', sysdate, 'SYSTEM'
+);
+
+INSERT INTO competitor (first_name, last_name, email, phone, gender, date_of_birth, sports_club, newsletter_subscription, publish_data, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
+VALUES (
+    'Mart', 'Random', 'mart.random@random.ee', '56123456', 'Mees', PARSEDATETIME('11.10.1975 00:00:00', 'dd.MM.yyyy hh:mm:ss'),
+  'Raplakad', false, true, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
+);
+
+INSERT INTO competition_participant (competitor_id, competition_distance_id, participation_count, championship_participation, payment_fulfilled, number_printed, envelope_printed, competitor_number, chip_id, CREATED, CREATED_BY, MODIFIED, MODIFIED_BY)
+VALUES (
+  (SELECT id FROM competitor WHERE email = 'mart.random@random.ee'),
+  (SELECT id FROM competition_distance WHERE name = 'Igamehejooks'),
+  1, false, true, false, false, null, null, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
 );

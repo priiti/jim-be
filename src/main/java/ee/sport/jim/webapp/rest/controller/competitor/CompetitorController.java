@@ -3,6 +3,7 @@ package ee.sport.jim.webapp.rest.controller.competitor;
 import ee.sport.jim.webapp.rest.dto.competitor.ParticipantRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,5 +28,10 @@ public class CompetitorController {
 	public ResponseEntity<?> register(@RequestBody @NotNull @Valid ParticipantRegistrationDto participantRegistrationDto) {
 		competitorRestService.register(participantRegistrationDto);
 		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping(value = "/private/payment/{participantId}", produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> updateParticipantPaymentInfo(@PathVariable @NotNull final Long participantId) {
+		return competitorRestService.updateParticipantPaymentInfo(participantId);
 	}
 }

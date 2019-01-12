@@ -8,26 +8,22 @@ import ee.sport.jim.webapp.repository.CompetitorRepository;
 import ee.sport.jim.webapp.repository.ParticipantRepository;
 import ee.sport.jim.webapp.rest.exception.ResourceNotFoundException;
 import ee.sport.jim.webapp.service.competition.CompetitionService;
+import ee.sport.jim.webapp.service.shared.NumberGeneratorService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CompetitorServiceImpl implements CompetitorService {
 	private final ParticipantRepository participantRepository;
 	private final CompetitorRepository competitorRepository;
 	private final CompetitionService competitionService;
-
-	@Autowired
-	public CompetitorServiceImpl(ParticipantRepository participantRepository, CompetitorRepository competitorRepository,
-															 CompetitionService competitionService) {
-		this.participantRepository = participantRepository;
-		this.competitorRepository = competitorRepository;
-		this.competitionService = competitionService;
-	}
+	private final NumberGeneratorService numberGeneratorService;
 
 	@Override
 	public Participant register(RegistrationHolder registrationHolder, long distanceId) {
@@ -46,5 +42,20 @@ public class CompetitorServiceImpl implements CompetitorService {
 		Participant registeredParticipant =  participantRepository.save(participant);
 		log.info("Registered participant: " + registrantInfo);
 		return registeredParticipant;
+	}
+
+	@Override
+	public Optional<Participant> updateParticipantPaymentInfo(Long participantId) {
+		Optional<Participant> optionalParticipant = participantRepository.findById(participantId);
+		if (!optionalParticipant.isPresent()) {
+			return Optional.empty();
+		}
+		Participant participant = optionalParticipant.get();
+		participant.setPaymentFulfilled(!participant.isPaymentFulfilled());
+		if (Objects.isNull(participant.getCompetitorNumber())) {
+			Integer competitorNumber = numberGeneratorService.generateCompetitorNumber(participant.getCompetitionDistance());
+			participant.setCompetitorNumber(competitorNumber);
+		}
+		return Optional.of(participantRepository.save(participant));
 	}
 }

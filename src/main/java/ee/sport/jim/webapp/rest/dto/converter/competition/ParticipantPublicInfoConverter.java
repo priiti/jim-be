@@ -23,6 +23,9 @@ public final class ParticipantPublicInfoConverter implements Converter<List<Part
 		if (participant.getCompetitor().isPublishData()) {
 			dto.setFirstName(participant.getCompetitor().getFirstName());
 			dto.setLastName(participant.getCompetitor().getLastName());
+		} else {
+			dto.setFirstName("******");
+			dto.setLastName("******");
 		}
 		return dto;
 	};

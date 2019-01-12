@@ -1,13 +1,11 @@
 package ee.sport.jim.webapp.rest.controller.competition;
 
 import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
-import ee.sport.jim.webapp.rest.dto.competition.ParticipantsInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
+import ee.sport.jim.webapp.rest.dto.competition.ParticipantsInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,10 +48,5 @@ public class CompetitionController {
 																												@PathVariable @NotNull final Long competitionId,
 																												@PathVariable @NotNull final Long distanceId) {
 		return competitionRestService.getAllCompParticipants(competitionId, distanceId, pageNumber, limit);
-	}
-
-	@PostMapping(value = "/private/payment/paid/{participantId}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateParticipantPaymentInfo(@PathVariable @NotNull final Long participantId) {
-			return competitionRestService.updateParticipantPaymentInfo(participantId);
 	}
 }

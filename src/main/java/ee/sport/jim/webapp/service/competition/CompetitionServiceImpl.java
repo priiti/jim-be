@@ -6,7 +6,6 @@ import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.repository.CompetitionDistanceRepository;
 import ee.sport.jim.webapp.repository.CompetitionRepository;
 import ee.sport.jim.webapp.repository.ParticipantRepository;
-import ee.sport.jim.webapp.service.shared.NumberGeneratorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -23,17 +21,14 @@ public class CompetitionServiceImpl implements CompetitionService {
 	private final CompetitionRepository competitionRepository;
 	private final CompetitionDistanceRepository distanceRepository;
 	private final ParticipantRepository participantRepository;
-	private final NumberGeneratorService numberGeneratorService;
 
 	@Autowired
 	public CompetitionServiceImpl(CompetitionRepository competitionRepository,
 																CompetitionDistanceRepository distanceRepository,
-																ParticipantRepository participantRepository,
-																NumberGeneratorService numberGeneratorService) {
+																ParticipantRepository participantRepository) {
 		this.competitionRepository = competitionRepository;
 		this.distanceRepository = distanceRepository;
 		this.participantRepository = participantRepository;
-		this.numberGeneratorService = numberGeneratorService;
 	}
 
 	@Override
@@ -49,21 +44,6 @@ public class CompetitionServiceImpl implements CompetitionService {
 	@Override
 	public Page<Participant> getAllCompetitionParticipants(long distanceId, Pageable page) {
 		return participantRepository.findByCompetitionDistanceId(distanceId, page);
-	}
-
-	@Override
-	public Optional<Participant> updateParticipantPaymentInfo(Long participantId) {
-		Optional<Participant> optionalParticipant = participantRepository.findById(participantId);
-		if (!optionalParticipant.isPresent()) {
-			return Optional.empty();
-		}
-		Participant participant = optionalParticipant.get();
-		participant.setPaymentFulfilled(!participant.isPaymentFulfilled());
-		if (Objects.isNull(participant.getCompetitorNumber())) {
-			Integer competitorNumber = numberGeneratorService.generateCompetitorNumber(participant.getCompetitionDistance());
-			participant.setCompetitorNumber(competitorNumber);
-		}
-		return Optional.of(participantRepository.save(participant));
 	}
 
 	@Override

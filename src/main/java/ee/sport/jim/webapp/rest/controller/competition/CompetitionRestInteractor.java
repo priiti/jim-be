@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -54,9 +53,6 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 		int page = pageNumber != null ? pageNumber : ResultSetEnum.DEFAULT_PAGE_NUMBER.getValue();
 		int limit = resultLimit != null ? resultLimit : ResultSetEnum.DEFAULT_PAGE_RESULT_LIMIT.getValue();
 		Page<Participant> participants = competitionService.getPaidCompetitionParticipants(distanceId, PageRequest.of(page, limit));
-		if (participants.getTotalElements() < 1) { // TODO - refactor better check and result
-			return null;
-		}
 		ParticipantsInfoDto participantsInfoDto = competitionDtoFactory.getPublicCompParticipantsInfo(participants.getContent());
 		participantsInfoDto.setDistanceParticipantCount(participants.getTotalElements());
 		return participantsInfoDto;
@@ -87,15 +83,6 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Competition with ID: " + competitionId);
 		}
 		return competitionDtoFactory.getCompetitionDistancesInfo(optionalCompetition.get());
-	}
-
-	@Override
-	public ResponseEntity<?> updateParticipantPaymentInfo(Long participantId) {
-		Optional<Participant> optionalParticipant = competitionService.updateParticipantPaymentInfo(participantId);
-		if (!optionalParticipant.isPresent()) {
-			throw new ResourceNotFoundException(RESOURCE_NOT_FOUND + "Participant not found with ID: " + participantId);
-		}
-		return ResponseEntity.ok().build();
 	}
 
 	private void validateCompetition(CompetitionDistance distance, long competitionId, long distanceId) {
