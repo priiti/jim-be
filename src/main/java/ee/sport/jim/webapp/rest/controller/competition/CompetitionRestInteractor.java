@@ -68,9 +68,6 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 		int page = pageNumber != null ? pageNumber : ResultSetEnum.DEFAULT_PAGE_NUMBER.getValue();
 		int limit = resultLimit != null ? resultLimit : ResultSetEnum.DEFAULT_PAGE_RESULT_LIMIT.getValue();
 		Page<Participant> participants = competitionService.getAllCompetitionParticipants(distanceId, PageRequest.of(page, limit));
-		if (participants.getTotalElements() < 1) { // TODO - refactor better check and result
-			return null;
-		}
 		ParticipantsInfoDto participantsInfoDto = competitionDtoFactory.getPrivateCompParticipantsInfo(participants.getContent());
 		participantsInfoDto.setDistanceParticipantCount(participants.getTotalElements());
 		return participantsInfoDto;

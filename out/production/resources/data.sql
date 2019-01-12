@@ -88,5 +88,5 @@ INSERT INTO competition_participant (competitor_id, competition_distance_id, par
 VALUES (
   (SELECT id FROM competitor WHERE email = 'mart.random@random.ee'),
   (SELECT id FROM competition_distance WHERE name = 'Igamehejooks'),
-  1, false, true, false, false, null, null, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
+  1, false, false, false, false, null, null, sysdate, 'SYSTEM', sysdate, 'SYSTEM'
 );
