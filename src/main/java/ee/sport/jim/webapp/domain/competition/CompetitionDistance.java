@@ -1,7 +1,7 @@
 package ee.sport.jim.webapp.domain.competition;
 
+import ee.sport.jim.webapp.domain.UserDateAudit;
 import ee.sport.jim.webapp.domain.competitor.Participant;
-import ee.sport.jim.webapp.domain.shared.BaseModel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,10 +34,10 @@ import java.util.Set;
 )
 @Entity
 @Table(name = "competition_distance")
-public class CompetitionDistance extends BaseModel {
+public class CompetitionDistance extends UserDateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", columnDefinition = "INTEGER(11)")
+	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "name")
@@ -78,6 +78,10 @@ public class CompetitionDistance extends BaseModel {
 	@OneToOne
 	@JoinColumn(name = "championship_type_id")
 	private ChampionshipType championshipType;
+
+	@OneToOne
+	@JoinColumn(name = "distance_type_id")
+	private DistanceType distanceType;
 
 	@OneToMany(mappedBy = "competitionDistance", fetch = FetchType.LAZY)
 	private Set<Participant> participants = new HashSet<>();

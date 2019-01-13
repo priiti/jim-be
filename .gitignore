@@ -75,8 +75,9 @@ out/
 ######################
 # Gradle
 ######################
-.gradle/
-/build/
+.gradle
+/build
+/out
 
 ######################
 # Package Files

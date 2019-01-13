@@ -1,13 +1,17 @@
 package ee.sport.jim.webapp.domain.competitor;
 
-import ee.sport.jim.webapp.domain.shared.BaseModel;
+import ee.sport.jim.webapp.domain.UserDateAudit;
+import ee.sport.jim.webapp.domain.shared.Gender;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,10 +24,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "competitor")
-public class Competitor extends BaseModel {
+public class Competitor extends UserDateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", columnDefinition = "INTEGER(11)")
+	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "first_name")
@@ -38,8 +42,10 @@ public class Competitor extends BaseModel {
 	@Column(name = "phone")
 	private String phoneNumber;
 
+	@Enumerated(EnumType.STRING)
+	@NaturalId
 	@Column(name = "gender")
-	private String gender;
+	private Gender gender;
 
 	@Column(name = "date_of_birth")
 	private LocalDateTime dateOfBirth;

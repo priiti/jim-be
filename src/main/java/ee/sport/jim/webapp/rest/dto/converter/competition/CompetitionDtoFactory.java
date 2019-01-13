@@ -4,7 +4,7 @@ import ee.sport.jim.webapp.domain.competition.Competition;
 import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
-import ee.sport.jim.webapp.rest.dto.competition.ParticipantsInfoDto;
+import ee.sport.jim.webapp.rest.dto.competition.ParticipantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,19 +16,15 @@ public final class CompetitionDtoFactory {
 	private final CompetitionConverter competitionConverter;
 	private final CompetitionDistanceConverter distanceConverter;
 	private final DistanceInfoConverter distanceInfoConverter;
-	private final ParticipantPublicInfoConverter participantInfoConverter;
-	private final ParticipantPrivateInfoConverter participantPrivateInfoConverter;
+	private final ParticipantInfoConverter participantInformationConverter = new ParticipantInfoConverter();
 
 	@Autowired
-	public CompetitionDtoFactory(CompetitionConverter competitionConverter, CompetitionDistanceConverter distanceConverter,
-															 ParticipantPublicInfoConverter participantInfoConverter,
-															 DistanceInfoConverter distanceInfoConverter,
-															 ParticipantPrivateInfoConverter participantPrivateInfoConverter) {
+	public CompetitionDtoFactory(CompetitionConverter competitionConverter,
+															 CompetitionDistanceConverter distanceConverter,
+															 DistanceInfoConverter distanceInfoConverter) {
 		this.competitionConverter = competitionConverter;
 		this.distanceConverter = distanceConverter;
-		this.participantInfoConverter = participantInfoConverter;
 		this.distanceInfoConverter = distanceInfoConverter;
-		this.participantPrivateInfoConverter = participantPrivateInfoConverter;
 	}
 
 	public CompetitionDto getCompetitionForRegistrationDto(Competition competition) {
@@ -37,15 +33,11 @@ public final class CompetitionDtoFactory {
 		return competitionDto;
 	}
 
-	public ParticipantsInfoDto getPublicCompParticipantsInfo(List<Participant> participants) {
-		return participantInfoConverter.convert(participants);
-	}
-
-	public ParticipantsInfoDto getPrivateCompParticipantsInfo(List<Participant> participants) {
-		return participantPrivateInfoConverter.convert(participants);
-	}
-
 	public CompDistanceInfoDto getCompetitionDistancesInfo(Competition competition) {
 		return distanceInfoConverter.convert(competition);
+	}
+
+	public List<ParticipantDto> getParticipantInformation(List<Participant> participants, final boolean hasRole) {
+		return participantInformationConverter.convertEntity(participants, hasRole);
 	}
 }

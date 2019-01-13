@@ -1,5 +1,8 @@
 package ee.sport.jim.webapp.rest.dto.competitor;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import ee.sport.jim.webapp.domain.shared.Gender;
+import ee.sport.jim.webapp.rest.util.GenderSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +23,8 @@ public class ParticipantRegistrationDto {
 	@Email
 	private String email;
 	@NotNull
-	private String gender;
+	@JsonSerialize(using = GenderSerializer.class)
+	private Gender gender;
 	private String phoneNumber;
 	@NotNull
 	private LocalDateTime dateOfBirth;
@@ -33,4 +37,6 @@ public class ParticipantRegistrationDto {
 	private boolean publishData;
 	@NotNull
 	private Long competitionDistanceId;
+	@NotNull
+	private Long competitionId;
 }

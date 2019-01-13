@@ -1,8 +1,9 @@
 package ee.sport.jim.webapp.rest.controller.competition;
 
+import ee.sport.jim.webapp.rest.dto.PagedResponse;
 import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
-import ee.sport.jim.webapp.rest.dto.competition.ParticipantsInfoDto;
+import ee.sport.jim.webapp.rest.dto.competition.ParticipantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
 
+import static ee.sport.jim.webapp.rest.util.AppConstants.DEFAULT_PAGE_NUMBER;
+import static ee.sport.jim.webapp.rest.util.AppConstants.DEFAULT_PAGE_SIZE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -30,11 +33,11 @@ public class CompetitionController {
 	}
 
 	@GetMapping(value = "/public/{competitionId}/participants/{distanceId}", produces = APPLICATION_JSON_VALUE)
-	public ParticipantsInfoDto getPublicCompParticipants(@RequestParam(required = false) final Integer pageNumber,
-																											 @RequestParam(required = false) final Integer limit,
-																											 @PathVariable @NotNull final Long competitionId,
-																											 @PathVariable @NotNull final Long distanceId) {
-		return competitionRestService.getPaidCompParticipants(competitionId, distanceId, pageNumber, limit);
+	public PagedResponse<ParticipantDto> getPublicCompParticipants(@PathVariable @NotNull final Long competitionId,
+																								 @PathVariable @NotNull final Long distanceId,
+																								 @RequestParam(value = "page", defaultValue = DEFAULT_PAGE_NUMBER) int page,
+																								 @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE) int size) {
+		return competitionRestService.getPaidCompParticipants(competitionId, distanceId, page, size);
 	}
 
 	@GetMapping(value = "/{competitionId}/info", produces = APPLICATION_JSON_VALUE)
@@ -43,10 +46,10 @@ public class CompetitionController {
 	}
 
 	@GetMapping(value = "/private/{competitionId}/participants/{distanceId}", produces = APPLICATION_JSON_VALUE)
-	public ParticipantsInfoDto getPrivateCompParticipants(@RequestParam(required = false) final Integer pageNumber,
-																												@RequestParam(required = false) final Integer limit,
-																												@PathVariable @NotNull final Long competitionId,
-																												@PathVariable @NotNull final Long distanceId) {
-		return competitionRestService.getAllCompParticipants(competitionId, distanceId, pageNumber, limit);
+	public PagedResponse<ParticipantDto> getPrivateCompParticipants(@PathVariable @NotNull final Long competitionId,
+																												@PathVariable @NotNull final Long distanceId,
+																												@RequestParam(value = "page", defaultValue = DEFAULT_PAGE_NUMBER) int page,
+																												@RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE) int size) {
+		return competitionRestService.getAllCompParticipants(competitionId, distanceId, page, size);
 	}
 }

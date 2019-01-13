@@ -1,6 +1,6 @@
 package ee.sport.jim.webapp.domain.competition;
 
-import ee.sport.jim.webapp.domain.shared.BaseModel;
+import ee.sport.jim.webapp.domain.UserDateAudit;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +19,10 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "championship_type")
-public class ChampionshipType extends BaseModel {
+public class ChampionshipType extends UserDateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", columnDefinition = "INTEGER(11)")
+	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "name")

@@ -26,19 +26,16 @@ public class CompetitorServiceImpl implements CompetitorService {
 	private final NumberGeneratorService numberGeneratorService;
 
 	@Override
-	public Participant register(RegistrationHolder registrationHolder, long distanceId) {
+	public Participant register(RegistrationHolder registrationHolder, long distanceId, long competitionId) {
 		String registrantInfo = String.format("%s %s, %s", registrationHolder.getCompetitor().getFirstName(),
 			registrationHolder.getCompetitor().getLastName(), registrationHolder.getCompetitor().getEmail());
 		log.info("Registering participant: " + registrantInfo);
-		Optional<CompetitionDistance> optionalDistance = competitionService.getCompetitionDistance(distanceId);
-		if (!optionalDistance.isPresent()) {
-			log.error("Registration failed for user: " + registrantInfo);
-			throw new ResourceNotFoundException(String.format("Distance with ID {%d} not found.", distanceId));
-		}
+		CompetitionDistance competitionDistance = competitionService.getCompetitionDistance(distanceId, competitionId)
+			.orElseThrow(() -> new ResourceNotFoundException("Competition Distance", "distanceId", distanceId));
 		Competitor competitor = competitorRepository.save(registrationHolder.getCompetitor());
 		Participant participant = registrationHolder.getParticipant();
 		participant.setCompetitor(competitor);
-		participant.setCompetitionDistance(optionalDistance.get());
+		participant.setCompetitionDistance(competitionDistance);
 		Participant registeredParticipant =  participantRepository.save(participant);
 		log.info("Registered participant: " + registrantInfo);
 		return registeredParticipant;

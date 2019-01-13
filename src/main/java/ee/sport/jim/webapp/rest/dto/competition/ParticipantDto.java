@@ -1,6 +1,9 @@
 package ee.sport.jim.webapp.rest.dto.competition;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ee.sport.jim.system.core.BooleanHolder;
+import ee.sport.jim.webapp.domain.shared.Gender;
+import ee.sport.jim.webapp.rest.util.GenderSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +21,8 @@ public class ParticipantDto {
 	private String email;
 	private LocalDateTime dateOfBirth;
 	private String sportsClub;
+	@JsonSerialize(using = GenderSerializer.class)
+	private Gender gender;
 	private CompetitionDistanceDto distance;
 	private Integer participationCount;
 	private BooleanHolder paymentFulfilled;

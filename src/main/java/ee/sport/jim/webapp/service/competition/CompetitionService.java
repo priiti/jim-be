@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface CompetitionService extends CrudService<Competition, Long> {
 
-	Optional<CompetitionDistance> getCompetitionDistance(long distanceId);
+	Optional<CompetitionDistance> getCompetitionDistance(long distanceId, long competitionId);
 
 	Page<Participant> getPaidCompetitionParticipants(long distanceId, Pageable page);
 
