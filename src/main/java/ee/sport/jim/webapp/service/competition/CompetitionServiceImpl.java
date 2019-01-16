@@ -32,8 +32,13 @@ public class CompetitionServiceImpl implements CompetitionService {
 	}
 
 	@Override
-	public Optional<CompetitionDistance> getCompetitionDistance(long competitionDistanceId) {
-		return distanceRepository.findById(competitionDistanceId);
+	public Optional<CompetitionDistance> getCompetitionDistance(long distanceId, long competitionId) {
+		return distanceRepository.findByIdAndCompetitionId(distanceId, competitionId);
+	}
+
+	@Override
+	public Optional<CompetitionDistance> getCompetitionDistance(long distanceId) {
+		return distanceRepository.findById(distanceId);
 	}
 
 	@Override

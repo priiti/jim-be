@@ -1,5 +1,6 @@
 package ee.sport.jim.webapp.rest.dto.competition;
 
+import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

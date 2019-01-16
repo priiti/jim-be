@@ -1,7 +1,7 @@
 package ee.sport.jim.webapp.domain.competition;
 
+import ee.sport.jim.webapp.domain.UserDateAudit;
 import ee.sport.jim.webapp.domain.organizer.Organizer;
-import ee.sport.jim.webapp.domain.shared.BaseModel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,10 +31,10 @@ import java.util.Set;
 )
 @Entity
 @Table(name = "competition")
-public class Competition extends BaseModel {
+public class Competition extends UserDateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", columnDefinition = "INTEGER(11)")
+	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "name")

@@ -1,7 +1,8 @@
 package ee.sport.jim.webapp.domain.organizer;
 
+import ee.sport.jim.webapp.domain.User;
+import ee.sport.jim.webapp.domain.UserDateAudit;
 import ee.sport.jim.webapp.domain.competition.Competition;
-import ee.sport.jim.webapp.domain.shared.BaseModel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,10 +31,10 @@ import java.util.Set;
 )
 @Entity
 @Table(name = "organizer")
-public class Organizer extends BaseModel {
+public class Organizer extends UserDateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", columnDefinition = "INTEGER(11)")
+	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "name")
@@ -43,6 +45,10 @@ public class Organizer extends BaseModel {
 
 	@Column(name = "phone")
 	private String phone;
+
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user_id;
 
 	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name = "organizer_competition",

@@ -1,7 +1,7 @@
 package ee.sport.jim.webapp.domain.competitor;
 
+import ee.sport.jim.webapp.domain.DateAudit;
 import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
-import ee.sport.jim.webapp.domain.shared.BaseModel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +24,10 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = false, exclude = {"competitor", "competitionDistance"})
 @Entity
 @Table(name = "competition_participant")
-public class Participant extends BaseModel {
+public class Participant extends DateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", columnDefinition = "INTEGER(11)")
+	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "participation_count")
@@ -48,7 +48,7 @@ public class Participant extends BaseModel {
 	@Column(name = "competitor_number")
 	private Integer competitorNumber;
 
-	@Column(name = "chip_id", columnDefinition = "INTEGER(11)")
+	@Column(name = "chip_id")
 	private Long chipId;
 
 	@OneToOne

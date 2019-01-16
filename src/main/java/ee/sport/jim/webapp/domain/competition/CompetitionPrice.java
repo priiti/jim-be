@@ -1,6 +1,6 @@
 package ee.sport.jim.webapp.domain.competition;
 
-import ee.sport.jim.webapp.domain.shared.BaseModel;
+import ee.sport.jim.webapp.domain.UserDateAudit;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +25,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false, exclude = {"distance"})
 @Entity
 @Table(name = "competition_price")
-public class CompetitionPrice extends BaseModel {
+public class CompetitionPrice extends UserDateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", columnDefinition = "INTEGER(11)")
+	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "start_date")

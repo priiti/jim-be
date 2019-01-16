@@ -8,50 +8,51 @@ DROP TABLE IF EXISTS organizer;
 DROP TABLE IF EXISTS organizer_competition;
 
 CREATE TABLE competition (
-  id          INT(11) AUTO_INCREMENT NOT NULL,
+  id          BIGINT(20) AUTO_INCREMENT NOT NULL,
   name        VARCHAR(255)           NOT NULL,
   start_date  TIMESTAMP              NOT NULL,
   end_date    TIMESTAMP              NULL,
   description TEXT                   NOT NULL,
   address     TEXT                   NOT NULL,
   -- TIMESTAMP
-  created     TIMESTAMP              NOT NULL,
-  created_by  VARCHAR(255)           NOT NULL,
-  modified    TIMESTAMP              NOT NULL,
-  modified_by VARCHAR(255)           NOT NULL
+  created_at  DATETIME               NOT NULL,
+  created_by  BIGINT(20)            NOT NULL,
+  updated_at DATETIME               NOT NULL,
+  updated_by BIGINT(20)            NOT NULL
 );
 
 ALTER TABLE competition
   ADD CONSTRAINT pk_comp PRIMARY KEY (id);
 
 CREATE TABLE championship_type (
-  id          INT(11) AUTO_INCREMENT NOT NULL,
+  id          BIGINT(20) AUTO_INCREMENT NOT NULL,
   name        VARCHAR(255)           NOT NULL,
   -- TIMESTAMP
-  created     TIMESTAMP              NOT NULL,
-  created_by  VARCHAR(255)           NOT NULL,
-  modified    TIMESTAMP              NOT NULL,
-  modified_by VARCHAR(255)           NOT NULL
+  created_at  DATETIME               NOT NULL,
+  created_by  BIGINT(20)            NOT NULL,
+  updated_at DATETIME               NOT NULL,
+  updated_by BIGINT(20)           NOT NULL
 );
 
 ALTER TABLE championship_type
   ADD CONSTRAINT pk_champ_type PRIMARY KEY (id);
 
 CREATE TABLE competition_distance (
-  id                        INT(11) AUTO_INCREMENT NOT NULL,
+  id                        BIGINT(20) AUTO_INCREMENT NOT NULL,
   name                      VARCHAR(255)           NOT NULL,
   length                    DECIMAL                NULL,
-  championship_type_id      INT(11)                NULL,
+  championship_type_id      BIGINT(20)                NULL,
   special_notes             TEXT,
-  competition_id            INT(11)                NOT NULL,
+  competition_id            BIGINT(20)                NOT NULL,
   start_time                TIMESTAMP              NOT NULL,
   start_numbering           INTEGER                NOT NULL,
-  current_competitor_number INTEGER DEFAULT (0)    NOT NULL,
+  current_competitor_number INTEGER                NULL,
+  distance_type_id          BIGINT(20)                NOT NULL,
   -- TIMESTAMP
-  created                   TIMESTAMP              NOT NULL,
-  created_by                VARCHAR(255)           NOT NULL,
-  modified                  TIMESTAMP              NOT NULL,
-  modified_by               VARCHAR(255)           NOT NULL
+  created_at  DATETIME               NOT NULL,
+  created_by  BIGINT(20)            NOT NULL,
+  updated_at DATETIME               NOT NULL,
+  updated_by BIGINT(20)            NOT NULL
 );
 
 ALTER TABLE competition_distance
@@ -65,17 +66,32 @@ ALTER TABLE competition_distance
   ADD CONSTRAINT fk_comp_id
 FOREIGN KEY (competition_id) REFERENCES competition (id);
 
-CREATE TABLE competition_price (
-  id                      INT(11) AUTO_INCREMENT NOT NULL,
-  competition_distance_id INT(11)                NOT NULL,
-  start_date              TIMESTAMP              NOT NULL,
-  end_date                TIMESTAMP              NOT NULL,
-  price                   DECIMAL                NOT NULL,
+ALTER TABLE competition_distance
+  ADD CONSTRAINT fk_comp_type_id
+FOREIGN KEY (distance_type_id) REFERENCES competition (id);
+
+CREATE TABLE competition_distance_type (
+  id   BIGINT(20) AUTO_INCREMENT NOT NULL,
+  name VARCHAR(55) NOT NULL,
   -- TIMESTAMP
-  created                 TIMESTAMP              NOT NULL,
-  created_by              VARCHAR(255)           NOT NULL,
-  modified                TIMESTAMP              NOT NULL,
-  modified_by             VARCHAR(255)           NOT NULL
+  created_at  DATETIME               NOT NULL,
+  updated_at  DATETIME               NOT NULL
+);
+
+ALTER TABLE competition_distance_type
+  ADD CONSTRAINT pk_dist_type PRIMARY KEY (id);
+
+CREATE TABLE competition_price (
+  id                      BIGINT(20) AUTO_INCREMENT NOT NULL,
+  competition_distance_id BIGINT(20)                NOT NULL,
+  start_date              TIMESTAMP                 NOT NULL,
+  end_date                TIMESTAMP                 NOT NULL,
+  price                   DECIMAL                   NOT NULL,
+  -- TIMESTAMP
+  created_at  DATETIME                              NOT NULL,
+  created_by  BIGINT(20)                            NOT NULL,
+  updated_at DATETIME                               NOT NULL,
+  updated_by BIGINT(20)                             NOT NULL
 );
 
 ALTER TABLE competition_price
@@ -86,7 +102,7 @@ ALTER TABLE competition_price
 FOREIGN KEY (competition_distance_id) REFERENCES competition_distance (id);
 
 CREATE TABLE competitor (
-  id                      INT(11) AUTO_INCREMENT NOT NULL,
+  id                      BIGINT(20) AUTO_INCREMENT NOT NULL,
   first_name              VARCHAR(255)           NOT NULL,
   last_name               VARCHAR(255)           NOT NULL,
   email                   VARCHAR(255)           NOT NULL,
@@ -97,31 +113,31 @@ CREATE TABLE competitor (
   newsletter_subscription BIT(1)                 NOT NULL,
   publish_data            BIT(1)                 NOT NULL,
   -- TIMESTAMP
-  created                 TIMESTAMP              NOT NULL,
-  created_by              VARCHAR(255)           NOT NULL,
-  modified                TIMESTAMP              NOT NULL,
-  modified_by             VARCHAR(255)           NOT NULL
+  created_at              DATETIME               NOT NULL,
+  created_by              BIGINT(20)             NULL,
+  updated_at              DATETIME               NOT NULL,
+  updated_by              BIGINT(20)             NULL
 );
 
 ALTER TABLE competitor
   ADD CONSTRAINT pk_competitor PRIMARY KEY (id);
 
 CREATE TABLE competition_participant (
-  id                         INT(11) AUTO_INCREMENT NOT NULL,
-  competitor_id              INT(11)                NOT NULL,
-  competition_distance_id    INT(11)                NOT NULL,
-  participation_count        INT                    NULL,
+  id                         BIGINT(20) AUTO_INCREMENT NOT NULL,
+  competitor_id              BIGINT(20)                NOT NULL,
+  competition_distance_id    BIGINT(20)                NOT NULL,
+  participation_count        INT                       NULL,
   payment_fulfilled          BIT(1) DEFAULT 0,
   number_printed             BIT(1) DEFAULT 0,
   envelope_printed           BIT(1) DEFAULT 0,
   championship_participation BIT(1) DEFAULT 0,
-  competitor_number          INT                    NULL,
-  chip_id                    INT(11)                NULL,
+  competitor_number          INT                       NULL,
+  chip_id                    BIGINT(20)                NULL,
   -- TIMESTAMP
-  created                    TIMESTAMP              NOT NULL,
-  created_by                 VARCHAR(255)           NOT NULL,
-  modified                   TIMESTAMP              NOT NULL,
-  modified_by                VARCHAR(255)           NOT NULL
+  created_at  DATETIME              NOT NULL,
+  created_by  BIGINT(20)            NULL,
+  updated_at  DATETIME              NOT NULL,
+  updated_by  BIGINT(20)            NULL
 );
 
 ALTER TABLE competition_participant
@@ -136,28 +152,50 @@ ALTER TABLE competition_participant
 FOREIGN KEY (competition_distance_id) REFERENCES competition_distance (id);
 
 CREATE TABLE organizer (
-  id          INT(11) AUTO_INCREMENT NOT NULL,
+  id          BIGINT(20) AUTO_INCREMENT NOT NULL,
   name        VARCHAR(255)           NOT NULL,
   email       VARCHAR(255)           NOT NULL,
   phone       VARCHAR(55)            NOT NULL,
+  user_id     BIGINT(20) NULL,
   -- TIMESTAMP
-  created     TIMESTAMP              NOT NULL,
-  created_by  VARCHAR(255)           NOT NULL,
-  modified    TIMESTAMP              NOT NULL,
-  modified_by VARCHAR(255)           NOT NULL
+  created_at  DATETIME               NOT NULL,
+  created_by  BIGINT(20)             NOT NULL,
+  updated_at DATETIME                NOT NULL,
+  updated_by BIGINT(20)              NOT NULL
 );
 
 ALTER table organizer
   ADD CONSTRAINT pk_organizer PRIMARY KEY (id);
 
 CREATE TABLE organizer_competition (
-  organizer_id   INT(11)      NOT NULL,
-  competition_id INT(11)      NOT NULL,
+  organizer_id   BIGINT(20)      NOT NULL,
+  competition_id BIGINT(20)      NOT NULL,
   -- TIMESTAMP
-  created        TIMESTAMP    NOT NULL,
-  created_by     VARCHAR(255) NOT NULL,
-  modified       TIMESTAMP    NOT NULL,
-  modified_by    VARCHAR(255) NOT NULL,
+  created_at  DATETIME               NOT NULL,
+  created_by  BIGINT(20)            NOT NULL,
+  updated_at DATETIME               NOT NULL,
+  updated_by BIGINT(20)            NOT NULL
+);
+
+CREATE TABLE roles (
+  id BIGINT(20) AUTO_INCREMENT NOT NULL,
+  name VARCHAR(55) NOT NULL
+);
+
+CREATE TABLE users (
+  id BIGINT(20) AUTO_INCREMENT NOT NULL,
+  first_name VARCHAR(40) NOT NULL,
+  last_name VARCHAR(40) NOT NULL,
+  user_name VARCHAR(15) NOT NULL,
+  email VARCHAR(40) NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL
+);
+
+CREATE TABLE user_roles (
+  user_id BIGINT(20) NOT NULL,
+  role_id BIGINT(20) NOT NULL
 );
 
 CREATE OR REPLACE VIEW v_comp_participant_list

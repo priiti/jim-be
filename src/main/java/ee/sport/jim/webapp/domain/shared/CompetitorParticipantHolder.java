@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RegistrationHolder {
+public class CompetitorParticipantHolder {
 	private Competitor competitor;
 	private Participant participant;
 }
