@@ -4,7 +4,7 @@ import ee.sport.jim.webapp.domain.competition.Competition;
 import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
-import ee.sport.jim.webapp.rest.dto.competition.ParticipantDto;
+import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

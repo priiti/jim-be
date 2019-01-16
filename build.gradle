@@ -34,6 +34,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile (group: 'org.apache.commons', name: 'commons-collections4', version: '4.1')
     compile ("org.apache.commons:commons-lang3:${apacheCommonsVersion}")
     compile ("com.vladmihalcea:hibernate-types-52:${hibernateTypes}")
     compile ('mysql:mysql-connector-java')

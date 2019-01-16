@@ -4,11 +4,9 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import ee.sport.jim.webapp.domain.shared.Gender;
-import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
-@NoArgsConstructor
 public class GenderSerializer extends JsonSerializer<Gender> {
 
 	@Override

@@ -1,6 +1,6 @@
 package ee.sport.jim.webapp.domain.competitor;
 
-import ee.sport.jim.webapp.domain.UserDateAudit;
+import ee.sport.jim.webapp.domain.DateAudit;
 import ee.sport.jim.webapp.domain.shared.Gender;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "competitor")
-public class Competitor extends UserDateAudit {
+public class Competitor extends DateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

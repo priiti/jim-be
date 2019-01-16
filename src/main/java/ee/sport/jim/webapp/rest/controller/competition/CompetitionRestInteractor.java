@@ -6,7 +6,7 @@ import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.rest.dto.PagedResponse;
 import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
-import ee.sport.jim.webapp.rest.dto.competition.ParticipantDto;
+import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
 import ee.sport.jim.webapp.rest.dto.converter.competition.CompetitionDtoFactory;
 import ee.sport.jim.webapp.rest.exception.ResourceNotFoundException;
 import ee.sport.jim.webapp.service.competition.CompetitionService;
@@ -35,14 +35,15 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 	public CompetitionDto getCompetitionForRegistration(long competitionId) {
 		log.info("Getting competition by id: " + competitionId);
 		Competition competition = competitionService.findById(competitionId)
-			.orElseThrow(() -> new ResourceNotFoundException("Competition", "competitionId", competitionId));
+			.orElseThrow(() -> new ResourceNotFoundException(Competition.class.getName(), "competitionId", competitionId));
+
 		return competitionDtoFactory.getCompetitionForRegistrationDto(competition);
 	}
 
 	@Override
-	public PagedResponse<ParticipantDto> getPaidCompParticipants(long competitionId, long distanceId, int page, int size) {
+	public PagedResponse<ParticipantDto> getPublicParticipants(long competitionId, long distanceId, int page, int size) {
 		CompetitionDistance competitionDistance = competitionService.getCompetitionDistance(distanceId, competitionId)
-			.orElseThrow(() -> new ResourceNotFoundException("Competition Distance", "distanceId", distanceId));
+			.orElseThrow(() -> new ResourceNotFoundException(CompetitionDistance.class.getName(), "distanceId", distanceId));
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Participant> participants = competitionService.getPaidCompetitionParticipants(competitionDistance.getId(), pageable);
 		List<ParticipantDto> participantDtos = competitionDtoFactory.getParticipantInformation(participants.getContent(), false);
@@ -53,9 +54,9 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 	}
 
 	@Override
-	public PagedResponse<ParticipantDto> getAllCompParticipants(long competitionId, long distanceId, int page, int size) {
+	public PagedResponse<ParticipantDto> getPrivateParticipants(long competitionId, long distanceId, int page, int size) {
 		CompetitionDistance competitionDistance = competitionService.getCompetitionDistance(distanceId, competitionId)
-			.orElseThrow(() -> new ResourceNotFoundException("Competition Distance", "distanceId", distanceId));
+			.orElseThrow(() -> new ResourceNotFoundException(CompetitionDistance.class.getName(), "distanceId", distanceId));
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Participant> participants = competitionService.getAllCompetitionParticipants(competitionDistance.getId(), pageable);
 		List<ParticipantDto> participantDtos = competitionDtoFactory.getParticipantInformation(participants.getContent(), true);
@@ -68,7 +69,8 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 	@Override
 	public CompDistanceInfoDto getCompetitionDistanceInfo(long competitionId) {
 		Competition competition = competitionService.findById(competitionId)
-			.orElseThrow(() -> new ResourceNotFoundException("Competition", "competitionId", competitionId));
+			.orElseThrow(() -> new ResourceNotFoundException(Competition.class.getName(), "competitionId", competitionId));
+
 		return competitionDtoFactory.getCompetitionDistancesInfo(competition);
 	}
 }

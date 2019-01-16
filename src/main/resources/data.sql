@@ -100,7 +100,7 @@ INSERT INTO competition_participant (competitor_id, competition_distance_id, par
 VALUES (
   (SELECT id FROM competitor WHERE email = 'mart.random@random.ee'),
   (SELECT id FROM competition_distance WHERE name = 'Igamehejooks'),
-  1, false, true, false, false, null, null, sysdate, 1, sysdate, 1
+  1, false, false, false, false, null, null, sysdate, 1, sysdate, 1
 );
 
 INSERT INTO roles (name)

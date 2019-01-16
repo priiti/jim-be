@@ -44,6 +44,14 @@ public class UserPrincipal implements UserDetails {
 		);
 	}
 
+	public boolean isCompetitionOrganizer(Long organizerId) {
+		return isCompetitionOrganizer(organizerId, false);
+	}
+
+	private boolean isCompetitionOrganizer(Long organizerId, boolean checkForEditAllowed) {
+		return true;
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;

@@ -46,7 +46,7 @@ CREATE TABLE competition_distance (
   competition_id            BIGINT(20)                NOT NULL,
   start_time                TIMESTAMP              NOT NULL,
   start_numbering           INTEGER                NOT NULL,
-  current_competitor_number INTEGER DEFAULT (0)    NOT NULL,
+  current_competitor_number INTEGER                NULL,
   distance_type_id          BIGINT(20)                NOT NULL,
   -- TIMESTAMP
   created_at  DATETIME               NOT NULL,
@@ -84,14 +84,14 @@ ALTER TABLE competition_distance_type
 CREATE TABLE competition_price (
   id                      BIGINT(20) AUTO_INCREMENT NOT NULL,
   competition_distance_id BIGINT(20)                NOT NULL,
-  start_date              TIMESTAMP              NOT NULL,
-  end_date                TIMESTAMP              NOT NULL,
-  price                   DECIMAL                NOT NULL,
+  start_date              TIMESTAMP                 NOT NULL,
+  end_date                TIMESTAMP                 NOT NULL,
+  price                   DECIMAL                   NOT NULL,
   -- TIMESTAMP
-  created_at  DATETIME               NOT NULL,
-  created_by  BIGINT(20)            NOT NULL,
-  updated_at DATETIME               NOT NULL,
-  updated_by BIGINT(20)            NOT NULL
+  created_at  DATETIME                              NOT NULL,
+  created_by  BIGINT(20)                            NOT NULL,
+  updated_at DATETIME                               NOT NULL,
+  updated_by BIGINT(20)                             NOT NULL
 );
 
 ALTER TABLE competition_price
@@ -113,10 +113,10 @@ CREATE TABLE competitor (
   newsletter_subscription BIT(1)                 NOT NULL,
   publish_data            BIT(1)                 NOT NULL,
   -- TIMESTAMP
-  created_at  DATETIME               NOT NULL,
-  created_by  BIGINT(20)            NOT NULL,
-  updated_at DATETIME               NOT NULL,
-  updated_by BIGINT(20)            NOT NULL
+  created_at              DATETIME               NOT NULL,
+  created_by              BIGINT(20)             NULL,
+  updated_at              DATETIME               NOT NULL,
+  updated_by              BIGINT(20)             NULL
 );
 
 ALTER TABLE competitor
@@ -126,18 +126,18 @@ CREATE TABLE competition_participant (
   id                         BIGINT(20) AUTO_INCREMENT NOT NULL,
   competitor_id              BIGINT(20)                NOT NULL,
   competition_distance_id    BIGINT(20)                NOT NULL,
-  participation_count        INT                    NULL,
+  participation_count        INT                       NULL,
   payment_fulfilled          BIT(1) DEFAULT 0,
   number_printed             BIT(1) DEFAULT 0,
   envelope_printed           BIT(1) DEFAULT 0,
   championship_participation BIT(1) DEFAULT 0,
-  competitor_number          INT                    NULL,
+  competitor_number          INT                       NULL,
   chip_id                    BIGINT(20)                NULL,
   -- TIMESTAMP
-  created_at  DATETIME               NOT NULL,
-  created_by  BIGINT(20)            NOT NULL,
-  updated_at DATETIME               NOT NULL,
-  updated_by BIGINT(20)            NOT NULL
+  created_at  DATETIME              NOT NULL,
+  created_by  BIGINT(20)            NULL,
+  updated_at  DATETIME              NOT NULL,
+  updated_by  BIGINT(20)            NULL
 );
 
 ALTER TABLE competition_participant
@@ -159,9 +159,9 @@ CREATE TABLE organizer (
   user_id     BIGINT(20) NULL,
   -- TIMESTAMP
   created_at  DATETIME               NOT NULL,
-  created_by  BIGINT(20)            NOT NULL,
-  updated_at DATETIME               NOT NULL,
-  updated_by BIGINT(20)            NOT NULL
+  created_by  BIGINT(20)             NOT NULL,
+  updated_at DATETIME                NOT NULL,
+  updated_by BIGINT(20)              NOT NULL
 );
 
 ALTER table organizer

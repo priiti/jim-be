@@ -1,12 +1,17 @@
 package ee.sport.jim.webapp.rest.controller.competitor;
 
+import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
 import ee.sport.jim.webapp.rest.dto.competitor.ParticipantRegistrationDto;
 import org.springframework.http.ResponseEntity;
 
 public interface CompetitorRestService {
 
-	void register(ParticipantRegistrationDto participantRegistrationDto);
+	ResponseEntity<?> register(ParticipantRegistrationDto participantRegistrationDto);
 
-	ResponseEntity<?> updateParticipantPaymentInfo(Long participantId);
+	ResponseEntity<?> updateParticipantPayment(long participantId);
+
+	ResponseEntity<?> removeParticipant(long participantId);
+
+	ResponseEntity<?> updateCompetitorParticipant(ParticipantDto participantDto);
 
 }

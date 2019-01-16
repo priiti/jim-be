@@ -37,6 +37,5 @@ public class ParticipantRegistrationDto {
 	private boolean publishData;
 	@NotNull
 	private Long competitionDistanceId;
-	@NotNull
 	private Long competitionId;
 }

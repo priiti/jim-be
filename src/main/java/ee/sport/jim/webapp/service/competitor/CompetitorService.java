@@ -1,14 +1,13 @@
 package ee.sport.jim.webapp.service.competitor;
 
 import ee.sport.jim.webapp.domain.competitor.Participant;
-import ee.sport.jim.webapp.domain.shared.RegistrationHolder;
-
-import java.util.Optional;
+import ee.sport.jim.webapp.domain.shared.CompetitorParticipantHolder;
 
 public interface CompetitorService {
 
-	Participant register(RegistrationHolder registrationHolder, long distanceId, long competitionId);
+	Participant register(CompetitorParticipantHolder participantHolder, long distanceId, long competitionId);
 
-	Optional<Participant> updateParticipantPaymentInfo(Long participantId);
+	Participant updateParticipantPayment(Long participantId);
 
+	Participant updateCompetitorParticipant(CompetitorParticipantHolder participantHolder);
 }

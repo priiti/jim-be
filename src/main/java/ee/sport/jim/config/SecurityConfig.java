@@ -18,8 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -64,39 +62,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+			.authorizeRequests()
+			.antMatchers("register", "/console/**", "/h2-console/**")
+				.permitAll()
+			.antMatchers("**/public/**")
+				.permitAll()
+			.antMatchers(
+				"/",
+				"/favicon.ico",
+				"/**/*.png",
+				"/**/*.gif",
+				"/**/*.svg",
+				"/**/*.jpg",
+				"/**/*.html",
+				"/**/*.css",
+				"/**/*.js"
+				)
+				.permitAll()
+			.anyRequest()
+				.authenticated()
+				.and()
 			.cors()
 				.and()
-			.csrf()
-				.and()
 			.exceptionHandling()
-				.authenticationEntryPoint(unauthorizedHandler)
+			.authenticationEntryPoint(unauthorizedHandler)
 				.and()
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
-			.authorizeRequests()
-				.antMatchers(
-					"/",
-					"/favicon.ico",
-					"/**/*.png",
-					"/**/*.gif",
-					"/**/*.svg",
-					"/**/*.jpg",
-					"/**/*.html",
-					"/**/*.css",
-					"/**/*.js"
-				)
-				.permitAll()
-			.antMatchers("/api/v1/**")
-				.permitAll()
-			.antMatchers("/h2-console/**", "/register", "/console")
-				.permitAll()
-//			.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-//				.permitAll()
-			.antMatchers(GET, "/api/polls/**", "/api/users/**")
-				.permitAll()
-			.anyRequest()
-			.authenticated();
+			.csrf()
+			.disable()
+			.headers()
+				.frameOptions()
+			.disable();
 
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

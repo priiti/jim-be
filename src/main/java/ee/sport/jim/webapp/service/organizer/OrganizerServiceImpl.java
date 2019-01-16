@@ -28,27 +28,27 @@ public class OrganizerServiceImpl implements OrganizerService {
 
 	@Override
 	public List<Organizer> findAll() {
-		return null;
+		return organizerRepository.findAll();
 	}
 
 	@Override
-	public Optional<Organizer> findById(Long aLong) {
-		return Optional.empty();
+	public Optional<Organizer> findById(Long id) {
+		return organizerRepository.findById(id);
 	}
 
 	@Override
-	public Organizer save(Organizer object) {
-		return null;
+	public Organizer save(Organizer organizer) {
+		return organizerRepository.save(organizer);
 	}
 
 	@Override
-	public void delete(Organizer object) {
-
+	public void delete(Organizer organizer) {
+		organizerRepository.delete(organizer);
 	}
 
 	@Override
-	public void deleteBy(Long aLong) {
-
+	public void deleteBy(Long id) {
+		organizerRepository.deleteById(id);
 	}
 
 	@Override

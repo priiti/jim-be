@@ -2,7 +2,7 @@ package ee.sport.jim.webapp.rest.dto.converter.competition;
 
 import ee.sport.jim.system.core.BooleanHolder;
 import ee.sport.jim.webapp.domain.competitor.Participant;
-import ee.sport.jim.webapp.rest.dto.competition.ParticipantDto;
+import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +17,7 @@ public final class ParticipantInfoConverter {
 		dto.setLastName(entity.getCompetitor().getLastName());
 		dto.setGender(entity.getCompetitor().getGender());
 		dto.setEmail(entity.getCompetitor().getEmail());
+		dto.setPhoneNumber(entity.getCompetitor().getPhoneNumber());
 		dto.setDateOfBirth(entity.getCompetitor().getDateOfBirth());
 		dto.setSportsClub(entity.getCompetitor().getSportsClub());
 		dto.setParticipationCount(entity.getParticipationCount());

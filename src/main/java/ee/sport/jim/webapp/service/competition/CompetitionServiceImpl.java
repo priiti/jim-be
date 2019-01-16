@@ -37,6 +37,11 @@ public class CompetitionServiceImpl implements CompetitionService {
 	}
 
 	@Override
+	public Optional<CompetitionDistance> getCompetitionDistance(long distanceId) {
+		return distanceRepository.findById(distanceId);
+	}
+
+	@Override
 	public Page<Participant> getPaidCompetitionParticipants(long distanceId, Pageable page) {
 		return participantRepository.findByCompetitionDistanceIdAndPaymentFulfilled(distanceId, true, page);
 	}

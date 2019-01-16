@@ -1,50 +1,88 @@
 package ee.sport.jim.webapp.rest.controller.competitor;
 
+import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
 import ee.sport.jim.webapp.domain.competitor.Participant;
-import ee.sport.jim.webapp.domain.shared.RegistrationHolder;
+import ee.sport.jim.webapp.domain.shared.CompetitorParticipantHolder;
 import ee.sport.jim.webapp.rest.dto.ApiResponse;
+import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
 import ee.sport.jim.webapp.rest.dto.competitor.ParticipantRegistrationDto;
 import ee.sport.jim.webapp.rest.dto.converter.competitor.CompetitorDtoFactory;
 import ee.sport.jim.webapp.rest.exception.ResourceNotFoundException;
 import ee.sport.jim.webapp.rest.util.URIBuilder;
+import ee.sport.jim.webapp.service.competition.CompetitionService;
 import ee.sport.jim.webapp.service.competitor.CompetitorService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
+
+import static ee.sport.jim.webapp.rest.util.CompetitorUtil.getFullName;
 
 @Slf4j
 @Service
 public class CompetitorRestInteractor implements CompetitorRestService {
 	private final CompetitorService competitorService;
 	private final CompetitorDtoFactory competitorDtoFactory;
+	private final CompetitionService competitionService;
 
-	public CompetitorRestInteractor(CompetitorService competitorService, CompetitorDtoFactory competitorDtoFactory) {
+	@Autowired
+	public CompetitorRestInteractor(CompetitorService competitorService,
+																	CompetitorDtoFactory competitorDtoFactory,
+																	CompetitionService competitionService) {
 		this.competitorService = competitorService;
 		this.competitorDtoFactory = competitorDtoFactory;
+		this.competitionService = competitionService;
 	}
 
 	@Override
-	public void register(ParticipantRegistrationDto participantRegistrationDto) {
-		log.info("Registering participant");
-		competitorService.register(createRegistrationHolder(participantRegistrationDto),
-			participantRegistrationDto.getCompetitionDistanceId(), participantRegistrationDto.getCompetitionId());
+	public ResponseEntity<?> register(ParticipantRegistrationDto participantRegistrationDto) {
+		CompetitionDistance distance = competitionService.getCompetitionDistance(participantRegistrationDto.getCompetitionDistanceId())
+			.orElseThrow(() -> new ResourceNotFoundException(CompetitionDistance.class.getName(), "distanceId", participantRegistrationDto.getCompetitionDistanceId()));
+		Participant participant = competitorService.register(createRegistrationHolder(participantRegistrationDto),
+			distance.getId(), participantRegistrationDto.getCompetitionId());
+		URI location = URIBuilder.create("/api/v1/competitor/register", getFullName(participant));
+		return ResponseEntity
+			.created(location)
+			.body(new ApiResponse(true, "Participant registered: " + getFullName(participant)));
 	}
 
 	@Override
-	public ResponseEntity<?> updateParticipantPaymentInfo(Long participantId) {
-		Participant participant = competitorService.updateParticipantPaymentInfo(participantId)
-			.orElseThrow(() -> new ResourceNotFoundException("Participant", "participantId", participantId));
-		URI location = URIBuilder.create("/api/v1/competitor/{participantId}",
-			participant.getCompetitor().getFirstName() + " " + participant.getCompetitor().getLastName());
-		return ResponseEntity.created(location).body(new ApiResponse(true, "Participant updated."));
+	public ResponseEntity<?> updateParticipantPayment(long participantId) {
+		Participant participant = competitorService.updateParticipantPayment(participantId);
+		log.info("Participant update completed");
+		URI location = URIBuilder.create("/api/v1/competitor/{participantId}", getFullName(participant));
+		return ResponseEntity
+			.created(location)
+			.body(new ApiResponse(true, "Participant updated: " + getFullName(participant)));
 	}
 
-	private RegistrationHolder createRegistrationHolder(ParticipantRegistrationDto registrationDto) {
-		RegistrationHolder registrationHolder = new RegistrationHolder();
-		registrationHolder.setCompetitor(competitorDtoFactory.getCompetitor(registrationDto));
-		registrationHolder.setParticipant(competitorDtoFactory.getParticipant(registrationDto));
-		return registrationHolder;
+	@Override
+	public ResponseEntity<?> removeParticipant(long participantId) {
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<?> updateCompetitorParticipant(ParticipantDto participantDto) {
+		CompetitorParticipantHolder holder = new CompetitorParticipantHolder();
+		holder.setCompetitor(competitorDtoFactory.getCompetitor(participantDto));
+		holder.setParticipant(competitorDtoFactory.getParticipant(participantDto));
+		CompetitionDistance distance = competitionService.getCompetitionDistance(participantDto.getDistanceId())
+			.orElseThrow(() -> new ResourceNotFoundException(CompetitionDistance.class.getName(), "distanceId", participantDto.getDistance()));
+		holder.getParticipant().setCompetitionDistance(distance);
+		Participant participant = competitorService.updateCompetitorParticipant(holder);
+		log.info("Participant update completed");
+		URI location = URIBuilder.create("/api/v1/competitor/private/update", getFullName(participant));
+		return ResponseEntity
+			.created(location)
+			.body(new ApiResponse(true, "Participant updated: " + getFullName(participant)));
+	}
+
+	private CompetitorParticipantHolder createRegistrationHolder(ParticipantRegistrationDto registrationDto) {
+		CompetitorParticipantHolder competitorParticipantHolder = new CompetitorParticipantHolder();
+		competitorParticipantHolder.setCompetitor(competitorDtoFactory.getCompetitor(registrationDto));
+		competitorParticipantHolder.setParticipant(competitorDtoFactory.getParticipant(registrationDto));
+		return competitorParticipantHolder;
 	}
 }

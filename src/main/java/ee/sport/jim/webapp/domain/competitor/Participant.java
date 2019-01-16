@@ -1,6 +1,6 @@
 package ee.sport.jim.webapp.domain.competitor;
 
-import ee.sport.jim.webapp.domain.UserDateAudit;
+import ee.sport.jim.webapp.domain.DateAudit;
 import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = false, exclude = {"competitor", "competitionDistance"})
 @Entity
 @Table(name = "competition_participant")
-public class Participant extends UserDateAudit {
+public class Participant extends DateAudit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
