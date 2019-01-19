@@ -103,5 +103,5 @@ VALUES (
   1, false, false, false, false, null, null, sysdate, 1, sysdate, 1
 );
 
-INSERT INTO roles (name)
+INSERT INTO authorities (name)
     VALUES ('ROLE_ADMIN'), ('ROLE_ORGANIZER'), ('ROLE_COMPETITOR');

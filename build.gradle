@@ -29,7 +29,6 @@ configurations {
     provideRuntime
 }
 
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -40,8 +39,12 @@ dependencies {
     compile ('mysql:mysql-connector-java')
     compile ("io.springfox:springfox-swagger-ui:${swagger2Version}")
     compile ("io.springfox:springfox-swagger2:${swagger2Version}")
-    compile (group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0')
+    compile (group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.10.5')
+    runtime (group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.10.5')
+    runtime (group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.10.5')
+    compile (group: 'org.zalando', name: 'problem-spring-web', version: '0.24.0-RC.0')
     compile (group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.7')
+    compile (group: 'org.zalando', name: 'problem', version: '0.21.0')
     runtimeOnly('com.h2database:h2')
 
     compileOnly ("org.projectlombok:lombok:${lombokVersion}")

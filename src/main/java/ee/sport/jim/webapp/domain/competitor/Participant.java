@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -24,7 +25,10 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = false, exclude = {"competitor", "competitionDistance"})
 @Entity
 @Table(name = "competition_participant")
-public class Participant extends DateAudit {
+public class Participant extends DateAudit implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

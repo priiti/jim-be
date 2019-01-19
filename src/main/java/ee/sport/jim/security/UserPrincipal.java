@@ -29,7 +29,7 @@ public class UserPrincipal implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public static UserPrincipal create(User user) {
-		List<GrantedAuthority> authorities = user.getRoles().stream()
+		List<GrantedAuthority> authorities = user.getAuthorities().stream()
 			.map(role -> new SimpleGrantedAuthority(role.getName().name()))
 			.collect(Collectors.toList());
 

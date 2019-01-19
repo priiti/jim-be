@@ -177,7 +177,7 @@ CREATE TABLE organizer_competition (
   updated_by BIGINT(20)            NOT NULL
 );
 
-CREATE TABLE roles (
+CREATE TABLE authorities (
   id BIGINT(20) AUTO_INCREMENT NOT NULL,
   name VARCHAR(55) NOT NULL
 );
@@ -187,15 +187,15 @@ CREATE TABLE users (
   first_name VARCHAR(40) NOT NULL,
   last_name VARCHAR(40) NOT NULL,
   user_name VARCHAR(15) NOT NULL,
-  email VARCHAR(40) NOT NULL,
-  password VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL
 );
 
-CREATE TABLE user_roles (
+CREATE TABLE user_authority (
   user_id BIGINT(20) NOT NULL,
-  role_id BIGINT(20) NOT NULL
+  authority_id BIGINT(20) NOT NULL
 );
 
 CREATE OR REPLACE VIEW v_comp_participant_list
