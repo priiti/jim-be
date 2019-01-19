@@ -42,6 +42,7 @@ public final class DistanceInfoConverter implements Converter<Competition, CompD
 		dto.setLength(distance.getLength());
 		dto.setSpecialNotes(distance.getSpecialNotes());
 		dto.setStartTime(distance.getStartTime());
+		dto.setParticipantCount(distance.getParticipants().size());
 		return dto;
 	}
 }

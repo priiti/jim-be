@@ -22,4 +22,5 @@ public class CompetitionDistanceDto {
 	private Integer startNumbering;
 	private ChampionshipTypeDto championshipType;
 	private List<CompetitionPriceDto> prices;
+	private Integer participantCount;
 }
