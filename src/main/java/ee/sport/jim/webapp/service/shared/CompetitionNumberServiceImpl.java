@@ -6,7 +6,6 @@ import ee.sport.jim.webapp.repository.CompetitionDistanceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -22,8 +21,7 @@ public class CompetitionNumberServiceImpl implements CompetitionNumberService {
 	public CompetitionNumberServiceImpl(CompetitionDistanceRepository competitionDistanceRepository) {
 		this.competitionDistanceRepository = competitionDistanceRepository;
 	}
-
-	@Transactional
+	
 	@Override
 	public int generateCompetitorNumber(CompetitionDistance distance, Participant participant) {
 		return createCompetitorNumber(distance, participant);
@@ -46,14 +44,14 @@ public class CompetitionNumberServiceImpl implements CompetitionNumberService {
 			Integer competitionDistanceStartingNumber = distance.getStartNumbering();
 			int competitorNumber = competitionDistanceStartingNumber < 1 ? 1 : competitionDistanceStartingNumber;
 			distance.setCurrentCompetitorNumber(competitorNumber);
-			competitionDistanceRepository.save(distance);
-			log.info("Number saved for: " + getCompetitionDistanceName(distance) + ", new currentCompetitorNumber is now: " + competitorNumber);
+			CompetitionDistance result = competitionDistanceRepository.save(distance);
+			log.info("Number saved for: " + getCompetitionDistanceName(result) + ", new currentCompetitorNumber is now: " + competitorNumber);
 			return competitorNumber;
 		} else {
 			int competitorNumber = currentCompetitorNumber.get() + 1;
 			distance.setCurrentCompetitorNumber(competitorNumber);
-			competitionDistanceRepository.save(distance);
-			log.info("Number saved for: " + getCompetitionDistanceName(distance) + ", new currentCompetitorNumber is now: " + competitorNumber);
+			CompetitionDistance result = competitionDistanceRepository.save(distance);
+			log.info("Number saved for: " + getCompetitionDistanceName(result) + ", new currentCompetitorNumber is now: " + competitorNumber);
 			return competitorNumber;
 		}
 	}

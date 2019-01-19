@@ -16,9 +16,9 @@ CREATE TABLE competition (
   address     TEXT                   NOT NULL,
   -- TIMESTAMP
   created_at  DATETIME               NOT NULL,
-  created_by  BIGINT(20)            NOT NULL,
+  created_by  VARCHAR(255)            NOT NULL,
   updated_at DATETIME               NOT NULL,
-  updated_by BIGINT(20)            NOT NULL
+  updated_by VARCHAR(255)            NOT NULL
 );
 
 ALTER TABLE competition
@@ -29,9 +29,9 @@ CREATE TABLE championship_type (
   name        VARCHAR(255)           NOT NULL,
   -- TIMESTAMP
   created_at  DATETIME               NOT NULL,
-  created_by  BIGINT(20)            NOT NULL,
+  created_by  VARCHAR(255)            NOT NULL,
   updated_at DATETIME               NOT NULL,
-  updated_by BIGINT(20)           NOT NULL
+  updated_by VARCHAR(255)           NOT NULL
 );
 
 ALTER TABLE championship_type
@@ -50,9 +50,9 @@ CREATE TABLE competition_distance (
   distance_type_id          BIGINT(20)                NOT NULL,
   -- TIMESTAMP
   created_at  DATETIME               NOT NULL,
-  created_by  BIGINT(20)            NOT NULL,
-  updated_at DATETIME               NOT NULL,
-  updated_by BIGINT(20)            NOT NULL
+  created_by  VARCHAR(255)            NOT NULL,
+  updated_at  DATETIME               NOT NULL,
+  updated_by  VARCHAR(255)            NOT NULL
 );
 
 ALTER TABLE competition_distance
@@ -89,9 +89,9 @@ CREATE TABLE competition_price (
   price                   DECIMAL                   NOT NULL,
   -- TIMESTAMP
   created_at  DATETIME                              NOT NULL,
-  created_by  BIGINT(20)                            NOT NULL,
+  created_by  VARCHAR(255)                           NOT NULL,
   updated_at DATETIME                               NOT NULL,
-  updated_by BIGINT(20)                             NOT NULL
+  updated_by VARCHAR(255)                            NOT NULL
 );
 
 ALTER TABLE competition_price
@@ -114,9 +114,9 @@ CREATE TABLE competitor (
   publish_data            BIT(1)                 NOT NULL,
   -- TIMESTAMP
   created_at              DATETIME               NOT NULL,
-  created_by              BIGINT(20)             NULL,
+  created_by              VARCHAR(255)             NULL,
   updated_at              DATETIME               NOT NULL,
-  updated_by              BIGINT(20)             NULL
+  updated_by              VARCHAR(255)             NULL
 );
 
 ALTER TABLE competitor
@@ -135,9 +135,9 @@ CREATE TABLE competition_participant (
   chip_id                    BIGINT(20)                NULL,
   -- TIMESTAMP
   created_at  DATETIME              NOT NULL,
-  created_by  BIGINT(20)            NULL,
+  created_by  VARCHAR(255)            NULL,
   updated_at  DATETIME              NOT NULL,
-  updated_by  BIGINT(20)            NULL
+  updated_by  VARCHAR(255)            NULL
 );
 
 ALTER TABLE competition_participant
@@ -159,9 +159,9 @@ CREATE TABLE organizer (
   user_id     BIGINT(20) NULL,
   -- TIMESTAMP
   created_at  DATETIME               NOT NULL,
-  created_by  BIGINT(20)             NOT NULL,
+  created_by  VARCHAR(255)             NOT NULL,
   updated_at DATETIME                NOT NULL,
-  updated_by BIGINT(20)              NOT NULL
+  updated_by VARCHAR(255)              NOT NULL
 );
 
 ALTER table organizer
@@ -172,9 +172,9 @@ CREATE TABLE organizer_competition (
   competition_id BIGINT(20)      NOT NULL,
   -- TIMESTAMP
   created_at  DATETIME               NOT NULL,
-  created_by  BIGINT(20)            NOT NULL,
+  created_by  VARCHAR(255)            NOT NULL,
   updated_at DATETIME               NOT NULL,
-  updated_by BIGINT(20)            NOT NULL
+  updated_by VARCHAR(255)            NOT NULL
 );
 
 CREATE TABLE authorities (

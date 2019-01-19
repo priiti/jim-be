@@ -50,7 +50,7 @@ public class JwtTokenProvider {
 		return Jwts.builder()
 			.setSubject(authentication.getName())
 			.claim(AUTHORITIES_KEY, authorities)
-			.signWith(SignatureAlgorithm.HS512, key)
+			.signWith(key, SignatureAlgorithm.HS512)
 			.setExpiration(validity)
 			.compact();
 	}

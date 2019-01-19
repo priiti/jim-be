@@ -121,7 +121,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				"/api/v1/auth/public/**",
 				"/public/config/version"
 			).permitAll()
-			.antMatchers("/api/v1/competition/private/**")
+			.antMatchers("/api/v1/competition/private/**", "/api/v1/competitor/private/**")
 				.authenticated()
 			.and()
 			.apply(securityConfigurerAdapter())
