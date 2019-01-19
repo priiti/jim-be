@@ -10,4 +10,6 @@ public interface CompetitorService {
 	Participant updateParticipantPayment(Long participantId);
 
 	Participant updateCompetitorParticipant(CompetitorParticipantHolder participantHolder);
+
+	void deleteParticipant(long participantId);
 }

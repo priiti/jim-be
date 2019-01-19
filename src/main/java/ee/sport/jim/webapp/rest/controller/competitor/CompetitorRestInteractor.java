@@ -60,7 +60,8 @@ public class CompetitorRestInteractor implements CompetitorRestService {
 
 	@Override
 	public ResponseEntity<?> removeParticipant(long participantId) {
-		return null;
+		competitorService.deleteParticipant(participantId);
+		return ResponseEntity.ok(new ApiResponse(true, "Participant deleted"));
 	}
 
 	@Override

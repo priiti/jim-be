@@ -73,6 +73,13 @@ public class CompetitorServiceImpl implements CompetitorService {
 		return participantRepository.save(participant);
 	}
 
+	@Override
+	public void deleteParticipant(long participantId) {
+		Participant participant = participantRepository.findById(participantId)
+			.orElseThrow(() -> new ResourceNotFoundException(Participant.class.getName(), "participantId", participantId));
+		participantRepository.delete(participant);
+	}
+
 	private void updateCompetitorParticipant(CompetitorParticipantHolder holder, Participant participant) {
 		participant.getCompetitor().setFirstName(holder.getCompetitor().getFirstName());
 		participant.getCompetitor().setLastName(holder.getCompetitor().getLastName());

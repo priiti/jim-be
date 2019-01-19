@@ -19,6 +19,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
+import static javax.persistence.CascadeType.REMOVE;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -55,7 +61,7 @@ public class Participant extends DateAudit implements Serializable {
 	@Column(name = "chip_id")
 	private Long chipId;
 
-	@OneToOne
+	@OneToOne(cascade = {PERSIST, MERGE, DETACH, REFRESH, REMOVE})
 	@JoinColumn(name = "competitor_id")
 	private Competitor competitor;
 
