@@ -5,6 +5,7 @@ import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
 import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.rest.dto.PagedResponse;
 import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
+import ee.sport.jim.webapp.rest.dto.competition.CompetitionDistanceDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
 import ee.sport.jim.webapp.rest.dto.converter.competition.CompetitionDtoFactory;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -70,7 +72,14 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 	public CompDistanceInfoDto getCompetitionDistanceInfo(long competitionId) {
 		Competition competition = competitionService.findById(competitionId)
 			.orElseThrow(() -> new ResourceNotFoundException(Competition.class.getName(), "competitionId", competitionId));
+		CompDistanceInfoDto distanceInfoDto = competitionDtoFactory.getCompetitionDistancesInfo(competition);
+		sortCompetitionDistanceInfoByLength(distanceInfoDto);
+		return distanceInfoDto;
+	}
 
-		return competitionDtoFactory.getCompetitionDistancesInfo(competition);
+	private void sortCompetitionDistanceInfoByLength(CompDistanceInfoDto competitionDistanceInfoDto) {
+		final Comparator<CompetitionDistanceDto> distanceComparator = Comparator.comparing(CompetitionDistanceDto::getLength,
+			Comparator.nullsFirst(Comparator.naturalOrder()));
+		competitionDistanceInfoDto.getDistances().sort(distanceComparator);
 	}
 }
