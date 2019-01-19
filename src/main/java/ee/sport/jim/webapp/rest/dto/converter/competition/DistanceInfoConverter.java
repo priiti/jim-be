@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,10 +16,13 @@ import java.util.stream.Collectors;
 @Component
 public final class DistanceInfoConverter implements Converter<Competition, CompDistanceInfoDto> {
 	private final CompetitionConverter competitionConverter;
+	private final CompetitionPriceConverter competitionPriceConverter;
 
 	@Autowired
-	public DistanceInfoConverter(CompetitionConverter competitionConverter) {
+	public DistanceInfoConverter(CompetitionConverter competitionConverter,
+															 CompetitionPriceConverter competitionPriceConverter) {
 		this.competitionConverter = competitionConverter;
+		this.competitionPriceConverter = competitionPriceConverter;
 	}
 
 	@Override
@@ -42,6 +46,7 @@ public final class DistanceInfoConverter implements Converter<Competition, CompD
 		dto.setLength(distance.getLength());
 		dto.setSpecialNotes(distance.getSpecialNotes());
 		dto.setStartTime(distance.getStartTime());
+		dto.setPrices(competitionPriceConverter.convertEntity(new ArrayList<>(distance.getPrices())));
 		dto.setParticipantCount(distance.getParticipants().size());
 		return dto;
 	}
