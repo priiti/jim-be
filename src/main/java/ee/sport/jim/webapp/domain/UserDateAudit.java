@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -16,7 +17,10 @@ import javax.persistence.MappedSuperclass;
 	value = {"createdBy", "updatedBy"},
 	allowGetters = true
 )
-public abstract class UserDateAudit extends DateAudit {
+public abstract class UserDateAudit extends DateAudit implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@CreatedBy
 	@Column(updatable = false)
 	private Long createdBy;

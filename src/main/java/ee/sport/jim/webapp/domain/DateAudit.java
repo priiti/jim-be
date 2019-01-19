@@ -1,5 +1,6 @@
 package ee.sport.jim.webapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,11 +23,16 @@ import java.time.Instant;
 	allowGetters = true
 )
 public abstract class DateAudit implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@JsonIgnore
 	@CreatedDate
 	@Column(nullable = false, updatable = false)
-	private Instant createdAt;
+	private Instant createdAt = Instant.now();
 
+	@JsonIgnore
 	@LastModifiedDate
 	@Column(nullable = false)
-	private Instant updatedAt;
+	private Instant updatedAt = Instant.now();
 }
