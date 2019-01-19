@@ -4,7 +4,7 @@ VALUES ('Raplamaa Meistrivõistlused', sysdate, 1, sysdate, 1);
 INSERT INTO competition (NAME, START_DATE, END_DATE, DESCRIPTION, ADDRESS, CREATED_AT, CREATED_BY, UPDATED_AT, UPDATED_BY)
 VALUES ('Järvakandi Igamehemaraton', PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'),
         PARSEDATETIME('25.08.2019 11:00:00', 'dd.MM.yyyy hh:mm:ss'),
-        'Jooksutrass Järvakandi alevis 4.2km ringil. Maraton 10 ringi. Sinu maraton 1, 2, 3, ... vöi 10 ringi',
+        'Jooksutrass Järvakandi alevis 4.2km ringil. Maraton 10 ringi. Sinu maraton 1, 2, 3, ... või 10 ringi',
         'Järvakandi, Tallinna mnt 43', sysdate, 1, sysdate, 1
 );
 
