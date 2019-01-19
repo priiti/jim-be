@@ -7,18 +7,17 @@ import ee.sport.jim.webapp.rest.dto.competitor.ParticipantRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public final class CompetitorDtoFactory {
 	private final CompetitorRegistrationConverter registrationConverter;
-	private final CompetitorConverter competitorConverter;
 	private final ParticipantConverter participantConverter;
 
 	@Autowired
 	public CompetitorDtoFactory(CompetitorRegistrationConverter registrationConverter,
-															CompetitorConverter competitorConverter,
 															ParticipantConverter participantConverter) {
 		this.registrationConverter = registrationConverter;
-		this.competitorConverter = competitorConverter;
 		this.participantConverter = participantConverter;
 	}
 
@@ -30,11 +29,11 @@ public final class CompetitorDtoFactory {
 		return registrationConverter.convertDtoToParticipant(registrationDto);
 	}
 
-	public Competitor getCompetitor(ParticipantDto participantDto) {
-		return competitorConverter.convertDto(participantDto);
+	public ParticipantDto convertParticipant(Participant participant) {
+		return participantConverter.convertEntity(participant);
 	}
 
-	public Participant getParticipant(ParticipantDto participantDto) {
-		return participantConverter.convertDto(participantDto);
+	public List<ParticipantDto> convertParticipants(List<Participant> participants) {
+		return participantConverter.convertEntity(participants);
 	}
 }

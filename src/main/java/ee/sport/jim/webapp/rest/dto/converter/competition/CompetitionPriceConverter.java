@@ -3,7 +3,6 @@ package ee.sport.jim.webapp.rest.dto.converter.competition;
 import ee.sport.jim.webapp.domain.competition.CompetitionPrice;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionPriceDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -25,7 +24,14 @@ public final class CompetitionPriceConverter extends GenericConverter<Competitio
 
 	@Override
 	public CompetitionPrice convertDto(CompetitionPriceDto dto) {
-		throw new NotImplementedException("CompetitionPrice entity converter not implemented");
+		CompetitionPrice entity = new CompetitionPrice();
+		if (dto.getId() != null) {
+			entity.setId(dto.getId());
+		}
+		entity.setStartDate(dto.getStartDate());
+		entity.setEndDate(dto.getEndDate());
+		entity.setPrice(dto.getPrice());
+		return entity;
 	}
 
 	@Override

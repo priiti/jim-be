@@ -1,7 +1,7 @@
 package ee.sport.jim.webapp.rest.dto.competition;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@Builder
 public class CompetitionDistanceDto {
 	private Long id;
 	private String name;
@@ -23,4 +23,6 @@ public class CompetitionDistanceDto {
 	private ChampionshipTypeDto championshipType;
 	private List<CompetitionPriceDto> prices;
 	private Integer participantCount;
+	private Integer currentCompetitorNumber;
+	private CompetitionDto competition;
 }
