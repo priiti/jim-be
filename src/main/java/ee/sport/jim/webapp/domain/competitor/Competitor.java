@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,7 +46,6 @@ public class Competitor extends DateAudit implements Serializable {
 	private String phoneNumber;
 
 	@Enumerated(EnumType.STRING)
-	@NaturalId
 	@Column(name = "gender")
 	private Gender gender;
 

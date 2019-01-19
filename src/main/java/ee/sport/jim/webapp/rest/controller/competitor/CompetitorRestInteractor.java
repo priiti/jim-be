@@ -1,6 +1,7 @@
 package ee.sport.jim.webapp.rest.controller.competitor;
 
 import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
+import ee.sport.jim.webapp.domain.competitor.Competitor;
 import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.domain.shared.CompetitorParticipantHolder;
 import ee.sport.jim.webapp.rest.dto.ApiResponse;
@@ -65,19 +66,34 @@ public class CompetitorRestInteractor implements CompetitorRestService {
 	}
 
 	@Override
-	public ResponseEntity<?> updateCompetitorParticipant(ParticipantDto participantDto) {
-		CompetitorParticipantHolder holder = new CompetitorParticipantHolder();
-		holder.setCompetitor(competitorDtoFactory.getCompetitor(participantDto));
-		holder.setParticipant(competitorDtoFactory.getParticipant(participantDto));
-		CompetitionDistance distance = competitionService.getCompetitionDistance(participantDto.getDistanceId())
-			.orElseThrow(() -> new ResourceNotFoundException(CompetitionDistance.class.getName(), "distanceId", participantDto.getDistance()));
-		holder.getParticipant().setCompetitionDistance(distance);
-		Participant participant = competitorService.updateCompetitorParticipant(holder);
+	public ResponseEntity<?> updateParticipant(ParticipantDto participantDto) {
+		Participant participant = competitorService.findById(participantDto.getParticipantId())
+			.orElseThrow(() -> new ResourceNotFoundException(Participant.class.getName(), "participantId", participantDto.getParticipantId()));
+		prepareForSave(participant.getCompetitor(), participant, participantDto);
+		Participant result = competitorService.updateParticipant(participant);
 		log.info("Participant update completed");
-		URI location = URIBuilder.create("/api/v1/competitor/private/update", getFullName(participant));
+		URI location = URIBuilder.create("/api/v1/competitor/private/update", getFullName(result));
 		return ResponseEntity
 			.created(location)
-			.body(new ApiResponse(true, "Participant updated: " + getFullName(participant)));
+			.body(new ApiResponse(true, "Participant updated: " + getFullName(result)));
+	}
+
+	private void prepareForSave(Competitor competitor, Participant participant, ParticipantDto dto) {
+		competitor.setFirstName(dto.getFirstName());
+		competitor.setLastName(dto.getLastName());
+		competitor.setDateOfBirth(dto.getDateOfBirth());
+		competitor.setEmail(dto.getEmail());
+		competitor.setPhoneNumber(dto.getPhoneNumber());
+		competitor.setSportsClub(dto.getSportsClub());
+		competitor.setGender(dto.getGender());
+		competitor.setPublishData(dto.isPublishData());
+		competitor.setNewsletterSubscription(dto.isNewsletterSubscription());
+		participant.setCompetitorNumber(dto.getCompetitorNumber());
+		participant.setParticipationCount(dto.getParticipationCount());
+		participant.setPaymentFulfilled(dto.isPaymentFulfilled());
+		participant.setChampionshipParticipation(dto.isChampionshipParticipation());
+		participant.setNumberPrinted(dto.isNumberPrinted());
+		participant.setEnvelopePrinted(dto.isEnvelopePrinted());
 	}
 
 	private CompetitorParticipantHolder createRegistrationHolder(ParticipantRegistrationDto registrationDto) {

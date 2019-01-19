@@ -37,8 +37,8 @@ public class CompetitorController {
 	}
 
 	@PostMapping(value = "/private/update", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateCompetitorParticipant(@RequestBody @NotNull @Valid ParticipantDto participantDto) {
-		return competitorRestService.updateCompetitorParticipant(participantDto);
+	public ResponseEntity<?> updateCompetitor(@RequestBody @NotNull @Valid ParticipantDto participantDto) {
+		return competitorRestService.updateParticipant(participantDto);
 	}
 
 	@DeleteMapping(value = "/private/remove/{participantId}", produces = APPLICATION_JSON_VALUE)

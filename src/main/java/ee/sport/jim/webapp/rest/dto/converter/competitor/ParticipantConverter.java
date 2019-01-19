@@ -19,10 +19,10 @@ public class ParticipantConverter extends GenericConverter<Participant, Particip
 		Participant entity = new Participant();
 		entity.setId(dto.getParticipantId());
 		entity.setParticipationCount(dto.getParticipationCount());
-		entity.setChampionshipParticipation(dto.getChampionshipParticipation().isValue());
-		entity.setPaymentFulfilled(dto.getPaymentFulfilled().isValue());
-		entity.setNumberPrinted(dto.getNumberPrinted().isValue());
-		entity.setEnvelopePrinted(dto.getEnvelopePrinted().isValue());
+		entity.setChampionshipParticipation(dto.isChampionshipParticipation());
+		entity.setPaymentFulfilled(dto.isPaymentFulfilled());
+		entity.setNumberPrinted(dto.isNumberPrinted());
+		entity.setEnvelopePrinted(dto.isEnvelopePrinted());
 		entity.setCompetitorNumber(dto.getCompetitorNumber());
 		entity.setChipId(dto.getChipId());
 		return entity;

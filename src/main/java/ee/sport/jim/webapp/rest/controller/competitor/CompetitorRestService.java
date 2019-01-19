@@ -12,6 +12,6 @@ public interface CompetitorRestService {
 
 	ResponseEntity<?> removeParticipant(long participantId);
 
-	ResponseEntity<?> updateCompetitorParticipant(ParticipantDto participantDto);
+	ResponseEntity<?> updateParticipant(ParticipantDto participantDto);
 
 }

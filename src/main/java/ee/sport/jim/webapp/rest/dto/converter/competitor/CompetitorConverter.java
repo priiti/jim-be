@@ -24,8 +24,8 @@ public class CompetitorConverter extends GenericConverter<Competitor, Participan
 		entity.setGender(dto.getGender());
 		entity.setDateOfBirth(dto.getDateOfBirth());
 		entity.setSportsClub(dto.getSportsClub());
-		entity.setNewsletterSubscription(dto.getNewsletterSubscription().isValue());
-		entity.setPublishData(dto.getPublishData().isValue());
+		entity.setNewsletterSubscription(dto.isNewsletterSubscription());
+		entity.setPublishData(dto.isPublishData());
 		return entity;
 	}
 }

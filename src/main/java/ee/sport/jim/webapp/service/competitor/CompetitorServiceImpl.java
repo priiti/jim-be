@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import static ee.sport.jim.webapp.service.CompetitionUtils.getCompetitorFullName;
 
@@ -34,6 +35,11 @@ public class CompetitorServiceImpl implements CompetitorService {
 		this.competitorRepository = competitorRepository;
 		this.competitionService = competitionService;
 		this.competitionNumberService = competitionNumberService;
+	}
+
+	@Override
+	public Optional<Participant> findById(long participantId) {
+		return participantRepository.findById(participantId);
 	}
 
 	@Override
@@ -65,12 +71,13 @@ public class CompetitorServiceImpl implements CompetitorService {
 	}
 
 	@Override
-	public Participant updateCompetitorParticipant(CompetitorParticipantHolder participantHolder) {
-		Participant participant = participantRepository.findById(participantHolder.getParticipant().getId())
-			.orElseThrow(() -> new ResourceNotFoundException(Participant.class.getName(), "participantId", participantHolder.getParticipant().getId()));
-
-		updateCompetitorParticipant(participantHolder, participant);
+	public Participant updateParticipant(Participant participant) {
 		return participantRepository.save(participant);
+	}
+
+	@Override
+	public Participant save(Participant participant) {
+		return null;
 	}
 
 	@Override
@@ -78,20 +85,5 @@ public class CompetitorServiceImpl implements CompetitorService {
 		Participant participant = participantRepository.findById(participantId)
 			.orElseThrow(() -> new ResourceNotFoundException(Participant.class.getName(), "participantId", participantId));
 		participantRepository.delete(participant);
-	}
-
-	private void updateCompetitorParticipant(CompetitorParticipantHolder holder, Participant participant) {
-		participant.getCompetitor().setFirstName(holder.getCompetitor().getFirstName());
-		participant.getCompetitor().setLastName(holder.getCompetitor().getLastName());
-		participant.getCompetitor().setEmail(holder.getCompetitor().getEmail());
-		participant.getCompetitor().setPhoneNumber(holder.getCompetitor().getPhoneNumber());
-		participant.getCompetitor().setGender(holder.getCompetitor().getGender());
-		participant.getCompetitor().setDateOfBirth(holder.getCompetitor().getDateOfBirth());
-		participant.getCompetitor().setSportsClub(holder.getCompetitor().getSportsClub());
-		participant.setChampionshipParticipation(holder.getParticipant().isChampionshipParticipation());
-		participant.setParticipationCount(holder.getParticipant().getParticipationCount());
-		if (!holder.getParticipant().getCompetitionDistance().equals(participant.getCompetitionDistance())) {
-			participant.setCompetitionDistance(holder.getParticipant().getCompetitionDistance());
-		}
 	}
 }

@@ -1,45 +1,62 @@
 package ee.sport.jim.webapp.rest.dto.competitor;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import ee.sport.jim.system.core.BooleanHolder;
 import ee.sport.jim.webapp.domain.shared.Gender;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDistanceDto;
-import ee.sport.jim.webapp.rest.util.BooleanSerializer;
-import ee.sport.jim.webapp.rest.util.GenderSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class ParticipantDto {
+	@NotNull
 	private Long participantId;
-	private Integer competitorNumber;
+
+	@NotNull
 	private String firstName;
+
+	@NotNull
 	private String lastName;
-	private String email;
-	private String phoneNumber;
+
+	@NotNull
+	private Integer competitorNumber;
+
+	@NotNull
 	private LocalDateTime dateOfBirth;
+
+	@NotNull
+	@Email
+	private String email;
+
+	@NotNull
+	private String phoneNumber;
 	private String sportsClub;
-	@JsonSerialize(using = GenderSerializer.class)
+
+	@NotNull
 	private Gender gender;
 	private CompetitionDistanceDto distance;
 	private Integer participationCount;
-	@JsonSerialize(using = BooleanSerializer.class)
-	private BooleanHolder paymentFulfilled;
-	@JsonSerialize(using = BooleanSerializer.class)
-	private BooleanHolder championshipParticipation;
-	@JsonSerialize(using = BooleanSerializer.class)
-	private BooleanHolder publishData;
-	@JsonSerialize(using = BooleanSerializer.class)
-	private BooleanHolder newsletterSubscription;
-	@JsonSerialize(using = BooleanSerializer.class)
-	private BooleanHolder numberPrinted;
-	@JsonSerialize(using = BooleanSerializer.class)
-	private BooleanHolder envelopePrinted;
+
+	@NotNull
+	private boolean paymentFulfilled;
+	private boolean championshipParticipation;
+
+	@NotNull
+	private boolean publishData;
+
+	@NotNull
+	private boolean newsletterSubscription;
+
+	@NotNull
+	private boolean numberPrinted;
+
+	@NotNull
+	private boolean envelopePrinted;
 	private Long chipId;
 	private Long distanceId;
 }
