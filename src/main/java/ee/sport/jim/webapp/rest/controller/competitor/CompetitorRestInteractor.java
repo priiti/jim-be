@@ -41,7 +41,7 @@ public class CompetitorRestInteractor implements CompetitorRestService {
 		CompetitionDistance distance = competitionService.getCompetitionDistance(participantRegistrationDto.getCompetitionDistanceId())
 			.orElseThrow(() -> new ResourceNotFoundException(CompetitionDistance.class.getName(), "distanceId", participantRegistrationDto.getCompetitionDistanceId()));
 		Participant participant = competitorService.register(createRegistrationHolder(participantRegistrationDto),
-			distance.getId(), participantRegistrationDto.getCompetitionId());
+			distance.getId(), distance.getCompetition().getId());
 		URI location = URIBuilder.create("/api/v1/competitor/register", getFullName(participant));
 		return ResponseEntity
 			.created(location)
