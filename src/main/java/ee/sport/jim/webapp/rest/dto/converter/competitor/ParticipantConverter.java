@@ -49,6 +49,7 @@ public class ParticipantConverter extends GenericConverter<Participant, Particip
 		entity.setNumberPrinted(dto.isNumberPrinted());
 		entity.setEnvelopePrinted(dto.isEnvelopePrinted());
 		entity.setCompetitorNumber(dto.getCompetitorNumber());
+		entity.setCompetitor(competitorConverter.convertDto(dto.getCompetitor()));
 		entity.setChipId(dto.getChipId());
 		return entity;
 	}

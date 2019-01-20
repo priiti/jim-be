@@ -1,5 +1,6 @@
 package ee.sport.jim.webapp.rest.dto.competition;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@JsonDeserialize(builder = CompetitionDistanceDto.CompetitionDistanceDtoBuilder.class)
 public class CompetitionDistanceDto {
 	private Long id;
 	private String name;
