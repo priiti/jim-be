@@ -18,5 +18,5 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
 
 	Page<Participant> findByCompetitionDistanceId(long competitionDistanceId, Pageable page);
 
-
+	boolean existsById(long id);
 }

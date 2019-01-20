@@ -43,22 +43,23 @@ public class CompetitorServiceImpl implements CompetitorService {
 	}
 
 	@Override
-	public Participant register(CompetitorParticipantHolder participantHolder, long distanceId, long competitionId) {
-		log.info("Participant registration started: " + getCompetitorFullName(participantHolder.getCompetitor()));
-		CompetitionDistance competitionDistance = competitionService.getCompetitionDistance(distanceId, competitionId)
-			.orElseThrow(() -> new ResourceNotFoundException(CompetitionDistance.class.getName(), "distanceId", distanceId));
-		Competitor competitor = competitorRepository.save(participantHolder.getCompetitor());
-		Participant participant = participantHolder.getParticipant();
+	public Participant register(CompetitorParticipantHolder registrationHolder) {
+		log.info("Participant registration started: " + getCompetitorFullName(registrationHolder.getCompetitor()));
+		CompetitionDistance competitionDistance = competitionService.getCompetitionDistance(
+			registrationHolder.getCompetitionDistanceId(), registrationHolder.getCompetitionId())
+			.orElseThrow(() -> new ResourceNotFoundException(CompetitionDistance.class.getName(), "distanceId",
+				registrationHolder.getCompetitionDistanceId()));
+		Competitor competitor = competitorRepository.save(registrationHolder.getCompetitor());
+		Participant participant = registrationHolder.getParticipant();
 		participant.setCompetitor(competitor);
 		participant.setCompetitionDistance(competitionDistance);
 		Participant result =  participantRepository.save(participant);
 		log.info("Participant successfully registered: " + getCompetitorFullName(result.getCompetitor()));
-
 		return result;
 	}
 
 	@Override
-	public Participant updateParticipantPayment(Long participantId) {
+	public Participant updateParticipantPayment(long participantId) {
 		Participant participant = participantRepository.findById(participantId)
 			.orElseThrow(() -> new ResourceNotFoundException(Participant.class.getName(), "participantId", participantId));
 		log.info("Updating participant payment: " + getCompetitorFullName(participant.getCompetitor()));
@@ -71,8 +72,28 @@ public class CompetitorServiceImpl implements CompetitorService {
 	}
 
 	@Override
-	public Participant updateParticipant(Participant participant) {
-		return participantRepository.save(participant);
+	public Participant updateParticipant(Participant changeParticipant) {
+		Participant existingParticipant = participantRepository.findById(changeParticipant.getId())
+			.orElseThrow(() -> new ResourceNotFoundException(Participant.class.getName(), "participantId", changeParticipant.getId()));
+		prepareForSave(changeParticipant, existingParticipant);
+		return participantRepository.save(existingParticipant);
+	}
+
+	private void prepareForSave(Participant changeParticipant, Participant existingParticipant) {
+		existingParticipant.getCompetitor().setFirstName(changeParticipant.getCompetitor().getFirstName());
+		existingParticipant.getCompetitor().setLastName(changeParticipant.getCompetitor().getLastName());
+		existingParticipant.getCompetitor().setDateOfBirth(changeParticipant.getCompetitor().getDateOfBirth());
+		existingParticipant.getCompetitor().setGender(changeParticipant.getCompetitor().getGender());
+		existingParticipant.getCompetitor().setPublishData(changeParticipant.getCompetitor().isPublishData());
+		existingParticipant.getCompetitor().setNewsletterSubscription(changeParticipant.getCompetitor().isNewsletterSubscription());
+		existingParticipant.getCompetitor().setSportsClub(changeParticipant.getCompetitor().getSportsClub());
+		existingParticipant.getCompetitor().setPhoneNumber(changeParticipant.getCompetitor().getPhoneNumber());
+		existingParticipant.getCompetitor().setEmail(changeParticipant.getCompetitor().getEmail());
+		existingParticipant.setEnvelopePrinted(changeParticipant.isEnvelopePrinted());
+		existingParticipant.setPaymentFulfilled(changeParticipant.isPaymentFulfilled());
+		existingParticipant.setChampionshipParticipation(changeParticipant.isChampionshipParticipation());
+		existingParticipant.setNumberPrinted(changeParticipant.isNumberPrinted());
+		existingParticipant.setCompetitorNumber(changeParticipant.getCompetitorNumber());
 	}
 
 	@Override
@@ -85,5 +106,10 @@ public class CompetitorServiceImpl implements CompetitorService {
 		Participant participant = participantRepository.findById(participantId)
 			.orElseThrow(() -> new ResourceNotFoundException(Participant.class.getName(), "participantId", participantId));
 		participantRepository.delete(participant);
+	}
+
+	@Override
+	public boolean ifParticipantExistsBy(long id) {
+		return participantRepository.existsById(id);
 	}
 }

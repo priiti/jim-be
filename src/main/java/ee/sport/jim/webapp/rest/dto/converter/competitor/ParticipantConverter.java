@@ -40,7 +40,9 @@ public class ParticipantConverter extends GenericConverter<Participant, Particip
 	@Override
 	public Participant convertDto(ParticipantDto dto) {
 		Participant entity = new Participant();
-		entity.setId(dto.getId());
+		if (dto.getId() != null) {
+			entity.setId(dto.getId());
+		}
 		entity.setParticipationCount(dto.getParticipationCount());
 		entity.setChampionshipParticipation(dto.isChampionshipParticipation());
 		entity.setPaymentFulfilled(dto.isPaymentFulfilled());

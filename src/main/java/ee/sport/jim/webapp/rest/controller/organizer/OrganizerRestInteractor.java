@@ -1,32 +1,32 @@
 package ee.sport.jim.webapp.rest.controller.organizer;
 
 import ee.sport.jim.webapp.domain.organizer.Organizer;
-import ee.sport.jim.webapp.rest.dto.converter.organizer.OrganizerInfoConverter;
-import ee.sport.jim.webapp.rest.dto.organizer.OrganizerInfoDto;
+import ee.sport.jim.webapp.rest.dto.converter.organizer.OrganizerConverter;
+import ee.sport.jim.webapp.rest.dto.organizer.OrganizerDto;
 import ee.sport.jim.webapp.service.organizer.OrganizerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class OrganizerRestInteractor implements OrganizerRestService {
 	private final OrganizerService organizerService;
-	private final OrganizerInfoConverter organizerInfoConverter;
+	private final OrganizerConverter organizerConverter;
 
 	@Autowired
 	public OrganizerRestInteractor(OrganizerService organizerService,
-																 OrganizerInfoConverter organizerInfoConverter) {
+																 OrganizerConverter organizerConverter) {
 		this.organizerService = organizerService;
-		this.organizerInfoConverter = organizerInfoConverter;
+		this.organizerConverter = organizerConverter;
 	}
 
 	@Override
-	public List<OrganizerInfoDto> getOrganizersByCompetitionId(long competitionId) {
+	public List<OrganizerDto> getOrganizersByCompetitionId(long competitionId) {
+		log.info("Searcing organizer by competition id: " + competitionId);
 		List<Organizer> organizers = organizerService.getOrganizersByCompetitionId(competitionId);
-		return CollectionUtils.isEmpty(organizers) ? new ArrayList<>() :
-			organizerInfoConverter.convert(organizers);
+		return organizerConverter.convertEntity(organizers);
 	}
 }

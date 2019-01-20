@@ -1,6 +1,6 @@
 package ee.sport.jim.webapp.rest.controller.organizer;
 
-import ee.sport.jim.webapp.rest.dto.organizer.OrganizerInfoDto;
+import ee.sport.jim.webapp.rest.dto.organizer.OrganizerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +21,7 @@ public class OrganizerController {
 	}
 
 	@GetMapping(value = "/public/info/{competitionId}")
-	public List<OrganizerInfoDto> getOrganizerInfo(@PathVariable @NotNull final Long competitionId) {
+	public List<OrganizerDto> getOrganizerInfo(@PathVariable @NotNull final Long competitionId) {
 		return organizerRestService.getOrganizersByCompetitionId(competitionId);
 	}
 }

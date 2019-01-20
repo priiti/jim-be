@@ -4,11 +4,11 @@ import ee.sport.jim.webapp.domain.competition.Competition;
 import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
 import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.rest.dto.PagedResponse;
-import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDistanceDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
 import ee.sport.jim.webapp.rest.dto.converter.competition.CompetitionDtoFactory;
+import ee.sport.jim.webapp.rest.dto.converter.competitor.CompetitorDtoFactory;
 import ee.sport.jim.webapp.rest.exception.ResourceNotFoundException;
 import ee.sport.jim.webapp.service.competition.CompetitionService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,11 +26,13 @@ import java.util.List;
 public class CompetitionRestInteractor implements CompetitionRestService {
 	private final CompetitionService competitionService;
 	private final CompetitionDtoFactory competitionDtoFactory;
+	private final CompetitorDtoFactory competitorDtoFactory;
 
 	@Autowired
-	public CompetitionRestInteractor(CompetitionService competitionService, CompetitionDtoFactory competitionDtoFactory) {
+	public CompetitionRestInteractor(CompetitionService competitionService, CompetitionDtoFactory competitionDtoFactory, CompetitorDtoFactory competitorDtoFactory) {
 		this.competitionService = competitionService;
 		this.competitionDtoFactory = competitionDtoFactory;
+		this.competitorDtoFactory = competitorDtoFactory;
 	}
 
 	@Override
@@ -38,8 +40,7 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 		log.info("Getting competition by id: " + competitionId);
 		Competition competition = competitionService.findById(competitionId)
 			.orElseThrow(() -> new ResourceNotFoundException(Competition.class.getName(), "competitionId", competitionId));
-
-		return competitionDtoFactory.getCompetitionForRegistrationDto(competition);
+		return competitionDtoFactory.convertCompetition(competition);
 	}
 
 	@Override
@@ -47,11 +48,11 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 		CompetitionDistance competitionDistance = competitionService.getCompetitionDistance(distanceId, competitionId)
 			.orElseThrow(() -> new ResourceNotFoundException(CompetitionDistance.class.getName(), "distanceId", distanceId));
 		Pageable pageable = PageRequest.of(page, size);
-		Page<Participant> participants = competitionService.getPaidCompetitionParticipants(competitionDistance.getId(), pageable);
-		List<ParticipantDto> participantDtos = competitionDtoFactory.getParticipantInformation(participants.getContent(), false);
+		Page<Participant> participantsPage = competitionService.getPaidCompetitionParticipants(competitionDistance.getId(), pageable);
+		List<ParticipantDto> participants = competitorDtoFactory.convertParticipants(participantsPage.getContent());
 
-		return new PagedResponse<>(participantDtos, participants.getNumber(), participants.getSize(), participants.getTotalElements(),
-			participants.getTotalPages(), participants.isLast()
+		return new PagedResponse<>(participants, participantsPage.getNumber(), participantsPage.getSize(), participantsPage.getTotalElements(),
+			participantsPage.getTotalPages(), participantsPage.isLast()
 		);
 	}
 
@@ -61,7 +62,7 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 			.orElseThrow(() -> new ResourceNotFoundException(CompetitionDistance.class.getName(), "distanceId", distanceId));
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Participant> participants = competitionService.getAllCompetitionParticipants(competitionDistance.getId(), pageable);
-		List<ParticipantDto> participantDtos = competitionDtoFactory.getParticipantInformation(participants.getContent(), true);
+		List<ParticipantDto> participantDtos = competitorDtoFactory.convertParticipants(participants.getContent());
 
 		return new PagedResponse<>(participantDtos, participants.getNumber(), participants.getSize(), participants.getTotalElements(),
 			participants.getTotalPages(), participants.isLast()
@@ -69,17 +70,17 @@ public class CompetitionRestInteractor implements CompetitionRestService {
 	}
 
 	@Override
-	public CompDistanceInfoDto getCompetitionDistanceInfo(long competitionId) {
+	public CompetitionDto getCompetitionInformation(long competitionId) {
 		Competition competition = competitionService.findById(competitionId)
 			.orElseThrow(() -> new ResourceNotFoundException(Competition.class.getName(), "competitionId", competitionId));
-		CompDistanceInfoDto distanceInfoDto = competitionDtoFactory.getCompetitionDistancesInfo(competition);
-		sortCompetitionDistanceInfoByLength(distanceInfoDto);
-		return distanceInfoDto;
+		CompetitionDto competitionDto = competitionDtoFactory.convertCompetition(competition);
+		sortCompetitionDistanceInfoByLength(competitionDto);
+		return competitionDto;
 	}
 
-	private void sortCompetitionDistanceInfoByLength(CompDistanceInfoDto competitionDistanceInfoDto) {
+	private void sortCompetitionDistanceInfoByLength(CompetitionDto competitionDto) {
 		final Comparator<CompetitionDistanceDto> distanceComparator = Comparator.comparing(CompetitionDistanceDto::getLength,
 			Comparator.nullsFirst(Comparator.naturalOrder()));
-		competitionDistanceInfoDto.getDistances().sort(distanceComparator);
+		competitionDto.getDistances().sort(distanceComparator);
 	}
 }

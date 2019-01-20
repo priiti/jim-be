@@ -9,13 +9,15 @@ public interface CompetitorService {
 
 	Optional<Participant> findById(long participantId);
 
-	Participant register(CompetitorParticipantHolder participantHolder, long distanceId, long competitionId);
+	Participant register(CompetitorParticipantHolder registrationHolder);
 
-	Participant updateParticipantPayment(Long participantId);
+	Participant updateParticipantPayment(long participantId);
 
 	Participant updateParticipant(Participant participant);
 
 	Participant save(Participant participant);
 
 	void deleteParticipant(long participantId);
+
+	boolean ifParticipantExistsBy(long id);
 }

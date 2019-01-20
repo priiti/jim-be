@@ -15,14 +15,12 @@ import java.util.stream.Collectors;
 public final class CompetitionDistanceConverter extends GenericConverter<CompetitionDistance, CompetitionDistanceDto> {
 	private final CompetitionPriceConverter competitionPriceConverter;
 	private final ChampionshipTypeConverter championshipTypeConverter;
-	private final CompetitionConverter competitionConverter;
 
 	@Autowired
 	public CompetitionDistanceConverter(CompetitionPriceConverter competitionPriceConverter,
 																			ChampionshipTypeConverter championshipTypeConverter, CompetitionConverter competitionConverter) {
 		this.competitionPriceConverter = competitionPriceConverter;
 		this.championshipTypeConverter = championshipTypeConverter;
-		this.competitionConverter = competitionConverter;
 	}
 
 	@Override
@@ -36,7 +34,6 @@ public final class CompetitionDistanceConverter extends GenericConverter<Competi
 			.startNumbering(entity.getStartNumbering())
 			.championshipType(getChampionShipType(entity))
 			.prices(getCompetitionPrices(entity))
-			.competition(competitionConverter.convertEntity(entity.getCompetition()))
 			.build();
 	}
 

@@ -17,24 +17,31 @@ import java.time.LocalDateTime;
 public class ParticipantRegistrationDto {
 	@NotNull
 	private String firstName;
+
 	@NotNull
 	private String lastName;
+
 	@NotNull
 	@Email
 	private String email;
+
 	@NotNull
 	@JsonSerialize(using = GenderSerializer.class)
 	private Gender gender;
 	private String phoneNumber;
+
 	@NotNull
 	private LocalDateTime dateOfBirth;
 	private String sportsClub;
 	private Integer participationCount;
 	private boolean championshipParticipation;
+
 	@NotNull
 	private boolean newsletterSubscription;
+
 	@NotNull
 	private boolean publishData;
+
 	@NotNull
 	private Long competitionDistanceId;
 	private Long competitionId;

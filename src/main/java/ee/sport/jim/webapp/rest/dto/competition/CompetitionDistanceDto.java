@@ -25,4 +25,19 @@ public class CompetitionDistanceDto {
 	private Integer participantCount;
 	private Integer currentCompetitorNumber;
 	private CompetitionDto competition;
+
+	public static CompetitionDistanceDto buildCompetitionDistanceDto(CompetitionDistanceDto competitionDistanceDto,
+																																	 ChampionshipTypeDto championshipTypeDto,
+																																	 List<CompetitionPriceDto> competitionPriceDtos) {
+		return CompetitionDistanceDto.builder()
+			.id(competitionDistanceDto.getId())
+			.name(competitionDistanceDto.getName())
+			.length(competitionDistanceDto.getLength())
+			.specialNotes(competitionDistanceDto.getSpecialNotes())
+			.startTime(competitionDistanceDto.getStartTime())
+			.startNumbering(competitionDistanceDto.getStartNumbering())
+			.championshipType(championshipTypeDto)
+			.prices(competitionPriceDtos)
+			.build();
+	}
 }
