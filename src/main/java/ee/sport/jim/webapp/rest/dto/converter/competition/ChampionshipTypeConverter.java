@@ -10,6 +10,9 @@ public final class ChampionshipTypeConverter extends GenericConverter<Championsh
 
 	@Override
 	public ChampionshipTypeDto convertEntity(ChampionshipType entity) {
+		if (entity == null) {
+			return null;
+		}
 		ChampionshipTypeDto dto = new ChampionshipTypeDto();
 		dto.setId(entity.getId());
 		dto.setName(entity.getName());

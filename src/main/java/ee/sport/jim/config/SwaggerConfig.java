@@ -18,8 +18,10 @@ import java.util.ArrayList;
 @EnableSwagger2
 public class SwaggerConfig {
 	private final JimReleaseProperties jimReleaseProperties;
+
 	@Value("${swagger.api.title}")
 	private String swaggerApiTitle;
+
 	@Value("${swagger.api.description}")
 	private String swaggerApiDescription;
 

@@ -2,39 +2,34 @@ package ee.sport.jim.webapp.rest.dto.converter.competitor;
 
 import ee.sport.jim.webapp.domain.competitor.Competitor;
 import ee.sport.jim.webapp.domain.competitor.Participant;
+import ee.sport.jim.webapp.rest.dto.competitor.CompetitorDto;
 import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
-import ee.sport.jim.webapp.rest.dto.competitor.ParticipantRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public final class CompetitorDtoFactory {
-	private final CompetitorRegistrationConverter registrationConverter;
-	private final CompetitorConverter competitorConverter;
 	private final ParticipantConverter participantConverter;
+	private final CompetitorConverter competitorConverter;
 
 	@Autowired
-	public CompetitorDtoFactory(CompetitorRegistrationConverter registrationConverter,
-															CompetitorConverter competitorConverter,
-															ParticipantConverter participantConverter) {
-		this.registrationConverter = registrationConverter;
-		this.competitorConverter = competitorConverter;
+	public CompetitorDtoFactory(ParticipantConverter participantConverter,
+															CompetitorConverter competitorConverter) {
 		this.participantConverter = participantConverter;
+		this.competitorConverter = competitorConverter;
 	}
 
-	public Competitor getCompetitor(ParticipantRegistrationDto registrationDto) {
-		return registrationConverter.convertDtoToCompetitor(registrationDto);
+	public Competitor convertCompetitor(CompetitorDto competitorDto) {
+		return competitorConverter.convertDto(competitorDto);
 	}
 
-	public Participant getParticipant(ParticipantRegistrationDto registrationDto) {
-		return registrationConverter.convertDtoToParticipant(registrationDto);
-	}
-
-	public Competitor getCompetitor(ParticipantDto participantDto) {
-		return competitorConverter.convertDto(participantDto);
-	}
-
-	public Participant getParticipant(ParticipantDto participantDto) {
+	public Participant convertParticipant(ParticipantDto participantDto) {
 		return participantConverter.convertDto(participantDto);
+	}
+
+	public List<ParticipantDto> convertParticipants(List<Participant> participants) {
+		return participantConverter.convertEntity(participants);
 	}
 }

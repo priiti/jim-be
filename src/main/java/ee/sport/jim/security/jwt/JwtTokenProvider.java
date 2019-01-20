@@ -28,10 +28,13 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
 	private static final String AUTHORITIES_KEY = "auth";
+
 	@Value("${app.jwtSecret}")
 	private String tokenSecret;
+
 	@Value("${app.jwtExpirationInMs}")
 	private String tokenValidityInMilliseconds;
+
 	private Key key;
 
 	@PostConstruct

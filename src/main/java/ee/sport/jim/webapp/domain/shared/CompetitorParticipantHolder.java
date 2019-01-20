@@ -12,4 +12,6 @@ import lombok.Setter;
 public class CompetitorParticipantHolder {
 	private Competitor competitor;
 	private Participant participant;
+	private Long competitionDistanceId;
+	private Long competitionId;
 }

@@ -1,31 +1,54 @@
 package ee.sport.jim.webapp.rest.dto.converter.competitor;
 
 import ee.sport.jim.webapp.domain.competitor.Competitor;
-import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
+import ee.sport.jim.webapp.rest.dto.competitor.CompetitorDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
-public class CompetitorConverter extends GenericConverter<Competitor, ParticipantDto> {
+public class CompetitorConverter extends GenericConverter<Competitor, CompetitorDto> {
 
 	@Override
-	public ParticipantDto convertEntity(Competitor entity) {
-		throw new NotImplementedException("Not implemented");
+	public CompetitorDto convertEntity(Competitor entity) {
+		return CompetitorDto.builder()
+			.id(entity.getId())
+			.firstName(entity.getFirstName())
+			.lastName(entity.getLastName())
+			.email(entity.getEmail())
+			.phoneNumber(entity.getPhoneNumber())
+			.gender(entity.getGender())
+			.dateOfBirth(entity.getDateOfBirth())
+			.sportsClub(entity.getSportsClub())
+			.newsLetterSubscription(entity.isNewsletterSubscription())
+			.publishData(entity.isPublishData())
+			.build();
 	}
 
 	@Override
-	public Competitor convertDto(ParticipantDto dto) {
-		Competitor entity = new Competitor();
-		entity.setFirstName(dto.getFirstName());
-		entity.setLastName(dto.getLastName());
-		entity.setEmail(dto.getEmail());
-		entity.setPhoneNumber(dto.getPhoneNumber());
-		entity.setGender(dto.getGender());
-		entity.setDateOfBirth(dto.getDateOfBirth());
-		entity.setSportsClub(dto.getSportsClub());
-		entity.setNewsletterSubscription(dto.isNewsletterSubscription());
-		entity.setPublishData(dto.isPublishData());
-		return entity;
+	public Competitor convertDto(CompetitorDto dto) {
+		Competitor competitor = new Competitor();
+		competitor.setId(dto.getId());
+		competitor.setFirstName(dto.getFirstName());
+		competitor.setLastName(dto.getLastName());
+		competitor.setEmail(dto.getEmail());
+		competitor.setPhoneNumber(dto.getPhoneNumber());
+		competitor.setGender(dto.getGender());
+		competitor.setDateOfBirth(dto.getDateOfBirth());
+		competitor.setSportsClub(dto.getSportsClub());
+		competitor.setNewsletterSubscription(dto.isNewsLetterSubscription());
+		competitor.setPublishData(dto.isPublishData());
+		return competitor;
+	}
+
+	@Override
+	public List<Competitor> convertDto(List<CompetitorDto> dtos) {
+		return super.convertDto(dtos);
+	}
+
+	@Override
+	public List<CompetitorDto> convertEntity(List<Competitor> entities) {
+		return super.convertEntity(entities);
 	}
 }

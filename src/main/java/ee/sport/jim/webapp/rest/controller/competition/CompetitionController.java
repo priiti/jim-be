@@ -1,7 +1,6 @@
 package ee.sport.jim.webapp.rest.controller.competition;
 
 import ee.sport.jim.webapp.rest.dto.PagedResponse;
-import ee.sport.jim.webapp.rest.dto.competition.CompDistanceInfoDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
 import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class CompetitionController {
 	}
 
 	@GetMapping(value = "/public/{competitionId}/registration", produces = APPLICATION_JSON_VALUE)
-	public CompetitionDto getCompetitionDataForRegistration(@PathVariable @NotNull final Long competitionId) {
+	public CompetitionDto getCompetitionForRegistration(@PathVariable @NotNull final Long competitionId) {
 		return competitionRestService.getCompetitionForRegistration(competitionId);
 	}
 
@@ -41,8 +40,8 @@ public class CompetitionController {
 	}
 
 	@GetMapping(value = "/public/{competitionId}/info", produces = APPLICATION_JSON_VALUE)
-	public CompDistanceInfoDto getCompetitionDistance(@PathVariable @NotNull final Long competitionId) {
-		return competitionRestService.getCompetitionDistanceInfo(competitionId);
+	public CompetitionDto getCompetitionDistance(@PathVariable @NotNull final Long competitionId) {
+		return competitionRestService.getCompetitionInformation(competitionId);
 	}
 
 	@GetMapping(value = "/private/{competitionId}/participants/{distanceId}", produces = APPLICATION_JSON_VALUE)
