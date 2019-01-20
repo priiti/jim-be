@@ -1,5 +1,6 @@
 package ee.sport.jim.webapp.rest.dto.converter.competitor;
 
+import ee.sport.jim.webapp.domain.competitor.Competitor;
 import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.rest.dto.competitor.ParticipantDto;
 import ee.sport.jim.webapp.rest.dto.converter.GenericConverter;
@@ -49,7 +50,7 @@ public class ParticipantConverter extends GenericConverter<Participant, Particip
 		entity.setNumberPrinted(dto.isNumberPrinted());
 		entity.setEnvelopePrinted(dto.isEnvelopePrinted());
 		entity.setCompetitorNumber(dto.getCompetitorNumber());
-		entity.setCompetitor(competitorConverter.convertDto(dto.getCompetitor()));
+		entity.setCompetitor(getCompetitor(dto));
 		entity.setChipId(dto.getChipId());
 		return entity;
 	}
@@ -62,5 +63,10 @@ public class ParticipantConverter extends GenericConverter<Participant, Particip
 	@Override
 	public List<ParticipantDto> convertEntity(List<Participant> entities) {
 		return super.convertEntity(entities);
+	}
+
+	private Competitor getCompetitor(ParticipantDto participantDto) {
+		return participantDto.getCompetitor() != null ?
+			competitorConverter.convertDto(participantDto.getCompetitor()) : null;
 	}
 }

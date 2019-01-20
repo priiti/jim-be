@@ -89,6 +89,7 @@ public class CompetitorServiceImpl implements CompetitorService {
 		existingParticipant.getCompetitor().setSportsClub(changeParticipant.getCompetitor().getSportsClub());
 		existingParticipant.getCompetitor().setPhoneNumber(changeParticipant.getCompetitor().getPhoneNumber());
 		existingParticipant.getCompetitor().setEmail(changeParticipant.getCompetitor().getEmail());
+		existingParticipant.setParticipationCount(changeParticipant.getParticipationCount());
 		existingParticipant.setEnvelopePrinted(changeParticipant.isEnvelopePrinted());
 		existingParticipant.setPaymentFulfilled(changeParticipant.isPaymentFulfilled());
 		existingParticipant.setChampionshipParticipation(changeParticipant.isChampionshipParticipation());

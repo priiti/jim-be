@@ -29,7 +29,9 @@ public class CompetitorConverter extends GenericConverter<Competitor, Competitor
 	@Override
 	public Competitor convertDto(CompetitorDto dto) {
 		Competitor competitor = new Competitor();
-		competitor.setId(dto.getId());
+		if (dto.getId() != null) {
+			competitor.setId(dto.getId());
+		}
 		competitor.setFirstName(dto.getFirstName());
 		competitor.setLastName(dto.getLastName());
 		competitor.setEmail(dto.getEmail());
