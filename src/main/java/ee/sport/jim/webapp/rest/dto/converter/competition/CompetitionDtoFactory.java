@@ -2,6 +2,7 @@ package ee.sport.jim.webapp.rest.dto.converter.competition;
 
 import ee.sport.jim.webapp.domain.competition.Competition;
 import ee.sport.jim.webapp.domain.competition.CompetitionDistance;
+import ee.sport.jim.webapp.domain.competitor.Participant;
 import ee.sport.jim.webapp.rest.dto.competition.ChampionshipTypeDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDistanceDto;
 import ee.sport.jim.webapp.rest.dto.competition.CompetitionDto;
@@ -42,8 +43,23 @@ public final class CompetitionDtoFactory {
 			ChampionshipTypeDto championshipTypeDto = championshipTypeConverter.convertEntity(distance.getChampionshipType());
 			List<CompetitionPriceDto> competitionPriceDtos = competitionPriceConverter.convertEntity(new ArrayList<>(distance.getPrices()));
 			CompetitionDistanceDto competitionDistanceDto = competitionDistanceConverter.convertEntity(distance);
+			competitionDistanceDto.setParticipantCount((long) distance.getParticipants().size());
+			competitionDistanceDto.setPaidParticipantCount(getPaidParticipantsCount(distance));
+			competitionDistanceDto.setNonPaidParticipantCount(getNonPaidParticipantsCount(distance));
 			distances.add(CompetitionDistanceDto.buildCompetitionDistanceDto(competitionDistanceDto, championshipTypeDto, competitionPriceDtos));
 		}
 		return distances;
+	}
+
+	private Long getPaidParticipantsCount(CompetitionDistance competitionDistance) {
+		return competitionDistance.getParticipants().stream()
+			.filter(Participant::isPaymentFulfilled)
+			.count();
+	}
+
+	private Long getNonPaidParticipantsCount(CompetitionDistance competitionDistance) {
+		return competitionDistance.getParticipants().stream()
+			.filter(participant -> !participant.isPaymentFulfilled())
+			.count();
 	}
 }
