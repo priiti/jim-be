@@ -51,11 +51,11 @@ public class Competition extends UserDateAudit implements Serializable {
 	private LocalDateTime endDate;
 
 	@Lob
-	@Column(name = "description")
+	@Column(name = "description", columnDefinition = "TEXT")
 	private String description;
 
 	@Lob
-	@Column(name = "address")
+	@Column(name = "address", columnDefinition = "TEXT")
 	private String address;
 
 	@OneToMany(mappedBy = "competition", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

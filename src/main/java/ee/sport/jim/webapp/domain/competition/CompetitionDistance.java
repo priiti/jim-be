@@ -51,7 +51,7 @@ public class CompetitionDistance extends UserDateAudit implements Serializable {
 	private BigDecimal length;
 
 	@Lob
-	@Column(name = "special_notes")
+	@Column(name = "special_notes", columnDefinition = "TEXT")
 	private String specialNotes;
 
 	@Column(name = "start_time")
